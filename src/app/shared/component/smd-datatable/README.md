@@ -25,14 +25,14 @@ Angular 2 datatable based on [Material Design Data Table](https://material.io/gu
         <smd-datatable-column title="Birth Date" field="birthDate" sortable="true"
                              [sortFn]="_sortByBirthDate"
                              [filterFn]="_filterByBirthDate">
-            <template let-model="data">
+            <ng-template let-model="data">
                 {{model.birthDate | date:'dd/MM/yyyy'}}
-            </template>
+            </ng-template>
         </smd-datatable-column>
         <smd-datatable-column title="Avatar" field="avatar" titleTooltip="User Avatar">
-            <template let-model="data">
+            <ng-template let-model="data">
                 <md-icon>{{model.avatar}}</md-icon>
-            </template>
+            </ng-template>
         </smd-datatable-column>
         <smd-datatable-column title="Comment" field="comment" titleTooltip="User comment" editable="true" editablePlaceholder="Add a comment"></smd-datatable-column>
     </smd-datatable>
@@ -91,9 +91,9 @@ Angular 2 datatable based on [Material Design Data Table](https://material.io/gu
 The smd-datatable-column enables the user to use a template to define the cell content:
 Example:
 
-    <template let-model="data">
+    <ng-template let-model="data">
         {{model.birthDate | date:'dd/MM/yyyy'}}
-    </template>
+    </ng-template>
     
 ### TODO List
 

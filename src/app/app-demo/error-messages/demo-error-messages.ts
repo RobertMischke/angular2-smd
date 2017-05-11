@@ -89,7 +89,7 @@ export class DemoErrorMessages implements OnInit {
                            required name="requiredFieldCustomMessage" #requiredFieldCustomMessageModel="ngModel"/>
                 </md-input-container>
                 <smd-error-messages [control]="requiredFieldCustomMessageModel">
-                    <template smdErrorMessage for="required">This Field is Required with a custom message</template>
+                    <ng-template smdErrorMessage for="required">This Field is Required with a custom message</ng-template>
                 </smd-error-messages>
             </div>
         </div>
@@ -118,7 +118,7 @@ export class DemoErrorMessages implements OnInit {
                         <input type="text" mdInput placeholder="Required Field (With Custom Message)" formControlName="requiredFieldCustomMessageReactive" required/>
                     </md-input-container>
                     <smd-error-messages [control]="myReactiveForm.get('requiredFieldCustomMessageReactive')">
-                        <template smdErrorMessage for="required">This Field is Required with a custom message</template>
+                        <ng-template smdErrorMessage for="required">This Field is Required with a custom message</ng-template>
                     </smd-error-messages>
                 </div>
                 <div class="column">
@@ -126,7 +126,7 @@ export class DemoErrorMessages implements OnInit {
                         <input type="text" mdInput placeholder="With Custom Validation" formControlName="requiredFieldCustomValidationReactive"/>
                     </md-input-container>
                     <smd-error-messages [control]="myReactiveForm.get('requiredFieldCustomValidationReactive')">
-                        <template smdErrorMessage for="myValidationError" let-error="error">Try to type '{{error.validItem}}'</template>
+                        <ng-template smdErrorMessage for="myValidationError" let-error="error">Try to type '{{error.validItem}}'</ng-template>
                     </smd-error-messages>
                 </div>
             </div>

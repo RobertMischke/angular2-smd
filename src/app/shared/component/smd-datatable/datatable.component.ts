@@ -124,7 +124,7 @@ export class SmdDataTableCellComponent implements OnInit, OnDestroy {
                 {{column.title}}
             </span>
             <span class="smd-cell-data">
-                <template smd-data-cell [column]="column" [data]="row.model" [templ]="column.template"></template>
+                <ng-template smd-data-cell [column]="column" [data]="row.model" [templ]="column.template"></ng-template>
                 <span class="smd-editable-field-placeholder" *ngIf="column.editable && !row.model[column.field]">{{column.editablePlaceholder}}</span>
             </span>
         </td>
@@ -173,9 +173,9 @@ export class SmdDataTableRowComponent {
     selector: "smd-datatable-column",
     template: `
         <ng-content select="template"></ng-content>
-        <template #internalTemplate *ngIf="!_template" let-model="data">
+        <ng-template #internalTemplate *ngIf="!_template" let-model="data">
             {{getFieldValue(model)}}
-        </template>
+        </ng-template>
     `
 })
 export class SmdDataTableColumnComponent implements OnInit {

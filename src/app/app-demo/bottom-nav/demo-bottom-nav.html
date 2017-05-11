@@ -1,10 +1,10 @@
 <smd-bottom-nav-group>
 
     <smd-bottom-nav color="primary">
-        <template smdBottomNavLabel>
-            <md-icon>search</md-icon>
+        <ng-template smdBottomNavLabel>
+            <md-icon class="material-icons">search</md-icon>
             <span>Search</span>
-        </template>
+        </ng-template>
 
         <md-card>
             <md-card-title>Test Search</md-card-title>
@@ -13,10 +13,10 @@
     </smd-bottom-nav>
 
     <smd-bottom-nav color="green">
-        <template smdBottomNavLabel>
-            <md-icon>add</md-icon>
+        <ng-template smdBottomNavLabel>
+            <md-icon class="material-icons">add</md-icon>
             <span>Add</span>
-        </template>
+        </ng-template>
 
         <md-card>
             <md-card-title>Test Add</md-card-title>
@@ -25,10 +25,10 @@
     </smd-bottom-nav>
 
     <smd-bottom-nav color="myCustomColor">
-        <template smdBottomNavLabel>
-            <md-icon>place</md-icon>
+        <ng-template smdBottomNavLabel>
+            <md-icon class="material-icons">place</md-icon>
             <span>Place</span>
-        </template>
+        </ng-template>
 
         <md-card>
             <md-card-title>Test Place</md-card-title>
@@ -37,14 +37,13 @@
     </smd-bottom-nav>
 
     <smd-bottom-nav color="blue">
-        <template smdBottomNavLabel>
-            <md-icon>close</md-icon>
+        <ng-template smdBottomNavLabel>
+            <md-icon class="material-icons">close</md-icon>
             <span>Close</span>
-        </template>
+        </ng-template>
 
         <md-card>
             <md-card-title>Test Close</md-card-title>
-
             <md-list>
                 <md-list-item *ngFor="let item of items">
                     Item: {{item}}

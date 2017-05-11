@@ -6,6 +6,7 @@ import '@angular/http';
 import '@angular/platform-browser';
 import '@angular/platform-browser-dynamic';
 import '@angular/router';
+import '@angular/animations';
 
 // Material + Flex Layout
 // import '@angular/flex-layout';

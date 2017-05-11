@@ -4,6 +4,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 var path = require('path');
 var _root = path.resolve(__dirname, '.');
+
 function root(args) {
     args = Array.prototype.slice.call(arguments, 0);
     return path.join.apply(path, [_root].concat(args));
@@ -18,17 +19,17 @@ module.exports = {
         'app': './src/main.ts'
     },
     resolve: {
-        extensions: ['', '.js', '.ts', '.scss']
+        extensions: [' ', '.js', '.ts', '.scss']
     },
     module: {
-        loaders: [
-            {
+        exprContextCritical: false,
+        loaders: [{
                 test: /\.ts$/,
                 loader: 'babel-loader?presets[]=es2015!awesome-typescript-loader!angular2-template-loader'
             },
             {
                 test: /\.html$/,
-                loader: 'html'
+                loader: 'html-loader'
             },
             {
                 test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
@@ -37,7 +38,7 @@ module.exports = {
             {
                 test: /\.scss$/,
                 exclude: root('src'),
-                loader: 'style!css!sass?sourceMap'
+                loader: 'style-loader!css-loader!sass-loader?sourceMap'
             },
             {
                 test: /\.scss$/,
@@ -47,12 +48,12 @@ module.exports = {
             {
                 test: /\.css$/,
                 exclude: root('src', 'app'),
-                loader: ExtractTextPlugin.extract('style', 'css?sourceMap')
+                loader: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css?sourceMap' })
             },
             {
                 test: /\.css$/,
                 include: root('src', 'app'),
-                loader: 'raw'
+                loader: 'raw-loader'
             }
         ]
     },
@@ -63,19 +64,17 @@ module.exports = {
         chunkFilename: '[id].chunk.js'
     },
     plugins: [
+        new webpack.ContextReplacementPlugin(
+            /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
+            path.resolve(__dirname, 'doesnotexist/')
+        ),
         new webpack.optimize.CommonsChunkPlugin({
             name: ['vendor-ng', 'polyfills']
         }),
         new HtmlWebpackPlugin({
             template: 'src/index.html'
         }),
-        new webpack.ProvidePlugin({
-            jQuery: 'jquery',
-            $: 'jquery',
-            jquery: 'jquery'
-        }),
-        new webpack.NoErrorsPlugin(),
-        new webpack.optimize.DedupePlugin(),
+        new webpack.NoEmitOnErrorsPlugin(),
         new webpack.HotModuleReplacementPlugin(),
         new ExtractTextPlugin('[name].css'),
         new webpack.DefinePlugin({
@@ -95,5 +94,3 @@ module.exports = {
         }
     }
 };
-
-

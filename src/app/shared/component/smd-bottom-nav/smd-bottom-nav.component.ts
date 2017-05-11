@@ -15,7 +15,7 @@ import {
 } from "@angular/core";
 
 @Directive({
-    selector: "template[smdBottomNavLabel]",
+    selector: "ng-template[smdBottomNavLabel]",
 })
 export class SmdBottomNavLabelDirective {
 
@@ -26,10 +26,10 @@ export class SmdBottomNavLabelDirective {
 @Component({
     selector: "smd-bottom-nav",
     template: `
-        <ng-content select="template[smdBottomNavLabel]"></ng-content>
-        <template #contentTemplate>
+        <ng-content select="[smdBottomNavLabel]"></ng-content>
+        <ng-template #contentTemplate>
             <ng-content></ng-content>
-        </template>
+        </ng-template>
     `
 })
 export class SmdBottomNavComponent {

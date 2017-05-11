@@ -51,7 +51,7 @@ let IMPORTS = [
     FormsModule,
     ReactiveFormsModule,
     BrowserModule,
-    MaterialModule.forRoot()
+    MaterialModule
 ];
 
 @NgModule({
@@ -71,7 +71,7 @@ export class ComponentsModule {
             FormsModule,
             ReactiveFormsModule,
             BrowserModule,
-            MaterialModule.forRoot(),
+            MaterialModule,
             ComponentsModule,
             ...imports
         ]

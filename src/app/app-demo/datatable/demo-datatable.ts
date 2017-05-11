@@ -70,6 +70,11 @@ export class DemoDatatable implements OnInit {
         console.log(event);
     }
 
+    openDialog(event: any) {
+        console.log('Open Dialog');
+        console.log(event);
+    }
+
     tsExample: string = `
     export class DemoDatatableView implements OnInit {
 
@@ -121,6 +126,11 @@ export class DemoDatatable implements OnInit {
             console.log('field changed');
             console.log(event);
         }
+
+        openDialog(event: any) {
+            console.log('Open Dialog');
+            console.log(event);
+        }
     }
     `;
 
@@ -153,15 +163,15 @@ export class DemoDatatable implements OnInit {
         <smd-datatable-column title="Birth Date" field="birthDate" sortable="true"
                              [sortFn]="_sortByBirthDate"
                              [filterFn]="_filterByBirthDate">
-            <template let-model="data">
+            <ng-template let-model="data">
                 {{model.birthDate | date:'dd/MM/yyyy'}}
-            </template>
+            </ng-template>
         </smd-datatable-column>
         
         <smd-datatable-column title="Avatar" field="avatar" titleTooltip="User Avatar">
-            <template let-model="data">
+            <ng-template let-model="data">
                 <md-icon>{{model.avatar}}</md-icon>
-            </template>
+            </ng-template>
         </smd-datatable-column>
         
         <smd-datatable-column title="Comment" field="comment" titleTooltip="User comment" 

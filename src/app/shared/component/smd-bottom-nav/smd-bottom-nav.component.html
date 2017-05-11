@@ -1,21 +1,20 @@
 <div class="smd-bottom-nav-content">
-    <template ngFor let-nav [ngForOf]="navs" let-i="index">
-        <div class="smd-bottom-nav-item">
+    <ng-template ngFor let-nav [ngForOf]="navs" let-i="index">
+        <div class="smd-bottom-nav-item" *ngIf="i == currentIndex">
             <div [@itemState]="nav.state">
-                <template [ngTemplateOutlet]="nav.content" *ngIf="i == currentIndex"></template>
+                <ng-template *ngTemplateOutlet="nav.content"></ng-template>
             </div>
         </div>
-    </template>
+    </ng-template>
 </div>
 <div class="smd-bottom-nav-actions">
-    <template ngFor let-nav [ngForOf]="navs" let-i="index">
-        <div class="smd-bottom-nav-action" (click)="setActiveIndex(i)"
-            [class.smd-bottom-nav-active]="i == currentIndex" #item>
-            <template [ngTemplateOutlet]="nav.label?.template"></template>
+    <ng-template ngFor let-nav [ngForOf]="navs" let-i="index">
+        <div class="smd-bottom-nav-action" (click)="setActiveIndex(i)" [class.smd-bottom-nav-active]="i == currentIndex" #item>
+            <ng-template *ngTemplateOutlet="nav.label?.template"></ng-template>
             <div class="smd-ripple-area" md-ripple [mdRippleTrigger]="item"></div>
         </div>
-    </template>
+    </ng-template>
 </div>
-<template>
+<ng-template>
     <ng-content select="smd-bottom-nav"></ng-content>
-</template>
+</ng-template>

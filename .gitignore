@@ -4,6 +4,7 @@
 */target
 /target
 /bin
+/dist
 
 *.settings
 *.classpath
