@@ -19,6 +19,7 @@ import {
     ElementRef,
     AfterContentInit,
     OnInit,
+    OnChanges,
     OnDestroy,
     ChangeDetectorRef
 } from "@angular/core";
@@ -178,7 +179,7 @@ export class SmdDataTableRowComponent {
         </ng-template>
     `
 })
-export class SmdDataTableColumnComponent implements OnInit {
+export class SmdDataTableColumnComponent implements OnInit, OnChanges {
     sortDir?: 'asc' | 'desc' = null;
     id: string = '' + ++columnIds;
 
@@ -191,11 +192,14 @@ export class SmdDataTableColumnComponent implements OnInit {
     @Input() filterFn: (a:any, text: string) => boolean;
     @Input() editable: boolean = false;
     @Input() editablePlaceholder: string;
+    @Input() searchable: boolean = false;
+    @Input() search: string;
 
     @ContentChild(TemplateRef) _customTemplate: TemplateRef<Object>;
     @ViewChild('internalTemplate') _internalTemplate: TemplateRef<Object>;
 
     @Output() onFieldChange: EventEmitter<any> = new EventEmitter<any>();
+    @Output() onSearchChange: EventEmitter<string> = new EventEmitter<string>();
 
     get template() {
         return this._customTemplate ? this._customTemplate : this._internalTemplate;
@@ -215,6 +219,17 @@ export class SmdDataTableColumnComponent implements OnInit {
         if (!this.field) {
             throw new Error('Field is mandatory on smd-datatable-column');
         }
+        if (this.sortable && this.searchable) {
+            this.sortable = false;
+        }
+    }
+
+    ngOnChanges(changes: any) {
+    }
+
+    _onSearchChange(e: any) {
+        this.onSearchChange.emit(this.search);
+        console.log(this.search);
     }
 
     getFieldValue(model: any) {
@@ -324,7 +339,13 @@ export class SmdDatatableHeader implements AfterContentInit, OnDestroy {
     }
 
     public shouldRenderCheckbox() {
-        return this.contextualButtons && this.contextualButtons.toArray().filter((button: SmdContextualDatatableButton) => button.minimunSelected > 0).length > 0;
+        let render;
+        if (this.contextualButtons) {
+            render =  this.contextualButtons && this.contextualButtons.toArray().filter((button: SmdContextualDatatableButton) => button.minimunSelected > 0).length > 0;
+        } else {
+            render = false;
+        }
+        return render;
     }
 
     private _hasRowsSelected(): boolean {

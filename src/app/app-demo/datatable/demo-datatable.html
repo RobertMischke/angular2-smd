@@ -17,9 +17,9 @@
             <smd-datatable-contextual-button (onClick)="openDialog($event)" icon="filter_list" mdTooltip="Open a dialog for filtering?"></smd-datatable-contextual-button>
         </smd-datatable-header>
 
-        <smd-datatable-column title="Id" field="id" sortable="true" numeric="true" titleTooltip="The identifier Tooltip"></smd-datatable-column>
+        <smd-datatable-column searchable="true" title="Name" field="name" sortable="true" titleTooltip="User first name"></smd-datatable-column>
 
-        <smd-datatable-column title="Name" field="name" sortable="true" titleTooltip="User first name"></smd-datatable-column>
+        <smd-datatable-column title="Id" field="id" sortable="true" numeric="true" titleTooltip="The identifier Tooltip"></smd-datatable-column>
 
         <smd-datatable-column title="Surname" field="surname" sortable="true"></smd-datatable-column>
 
