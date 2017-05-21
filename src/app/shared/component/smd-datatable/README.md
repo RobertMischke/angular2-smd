@@ -19,8 +19,9 @@ Angular 2 datatable based on [Material Design Data Table](https://material.io/gu
             <smd-datatable-contextual-button (onClick)="removeSample($event)" icon="delete" [minimunSelected]="1"></smd-datatable-contextual-button>
         </smd-datatable-header>
     
+        <smd-datatable-column searchable="true" title="Name" field="name" sortable="true" titleTooltip="User first name"></smd-datatable-column>
+
         <smd-datatable-column title="Id" field="id" sortable="true" numeric="true" titleTooltip="The identifier Tooltip"></smd-datatable-column>
-        <smd-datatable-column title="Name" field="name" sortable="true" titleTooltip="User first name"></smd-datatable-column>
         <smd-datatable-column title="Surname" field="surname" sortable="true"></smd-datatable-column>
         <smd-datatable-column title="Birth Date" field="birthDate" sortable="true"
                              [sortFn]="_sortByBirthDate"
@@ -81,6 +82,7 @@ Angular 2 datatable based on [Material Design Data Table](https://material.io/gu
 | field                 | string       |                     | The field (from models) to represent this column (when a template is not used, this field will be shown in the datatable cell|
 | numeric               | boolean      | false               | If this column should be treated as numeric     |
 | titleTooltip          | string       |                     | The tooltip for the header of this column       |
+| searchable            | boolean      | false               | If this column is searchable (default not Searchable) |
 | sortable              | boolean      | false               | If this column is sorted (default sort by this column field value) |
 | sortFn                | Function     |                     | If sortable, a custom function to sort this column |
 | filterFn              | Function     |                     | When filter is enabled, a custom function to filter this column |
