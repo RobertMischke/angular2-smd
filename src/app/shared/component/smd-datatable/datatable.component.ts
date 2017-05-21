@@ -409,6 +409,8 @@ export class SmdDataTable implements DoCheck, AfterContentInit, OnDestroy {
     @Output() onRowSelected: EventEmitter<{model: any, checked: boolean}> = new EventEmitter<{model: any, checked: boolean}>();
     @Output() onAllRowsSelected: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+    @Input() responsiveSearch: string;
+
     constructor(differs: IterableDiffers, private _viewContainer: ViewContainerRef, public changeDetector: ChangeDetectorRef) {
         this.differ = differs.find([]).create(null);
     }
@@ -419,6 +421,17 @@ export class SmdDataTable implements DoCheck, AfterContentInit, OnDestroy {
             this._updateRows();
             this.changeDetector.markForCheck();
         });
+        if (this.responsive) {
+            let findSearchable = this.columns.filter(this.find);
+            if (findSearchable.length > 0) {
+                this.responsiveSearch = findSearchable[0].title;
+            }
+        }
+    }
+
+    find(item: SmdDataTableColumnComponent): boolean {
+        console.log(item.searchable);
+        return String(item.searchable) === 'true';
     }
 
     ngDoCheck(): void {
