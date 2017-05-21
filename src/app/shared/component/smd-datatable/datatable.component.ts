@@ -199,7 +199,6 @@ export class SmdDataTableColumnComponent implements OnInit, OnChanges {
     @ViewChild('internalTemplate') _internalTemplate: TemplateRef<Object>;
 
     @Output() onFieldChange: EventEmitter<any> = new EventEmitter<any>();
-    @Output() onSearchChange: EventEmitter<string> = new EventEmitter<string>();
 
     get template() {
         return this._customTemplate ? this._customTemplate : this._internalTemplate;
@@ -225,11 +224,6 @@ export class SmdDataTableColumnComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: any) {
-    }
-
-    _onSearchChange(e: any) {
-        this.onSearchChange.emit(this.search);
-        console.log(this.search);
     }
 
     getFieldValue(model: any) {
@@ -395,6 +389,8 @@ export class SmdDataTable implements DoCheck, AfterContentInit, OnDestroy {
     private visibleRows: SmdDataRowModel[] = [];
     private differ: any;
     private _columnsSubscription: Subscription;
+    private searchValue: string;
+    private columnTitleSearch: string;
 
     get rowCount(): number {
         return this.rows.length;
@@ -442,7 +438,8 @@ export class SmdDataTable implements DoCheck, AfterContentInit, OnDestroy {
         if (this.models) {
             this.rows.length = 0;
             this.models.forEach((model: any, index: number) => this.rows[index] = new SmdDataRowModel(model, this.checked));
-            this.rows = this.rows.filter((row: SmdDataRowModel) => this._matches(row, this.columns.toArray(), this.header.filterValue));
+            let filterValue = this.searchValue || this.header.filterValue;
+            this.rows = this.rows.filter((row: SmdDataRowModel) => this._matches(row, this.columns.toArray(), filterValue));
             this.rows.forEach((row, index) => row.originalOrder = index);
             this._updateVisibleRows();
         }
@@ -454,16 +451,27 @@ export class SmdDataTable implements DoCheck, AfterContentInit, OnDestroy {
         }
 
         let subtexts : string[] = text.trim().split(" ");
+        let searchColumn = this.columnTitleSearch.toLowerCase();
         for(let subtext of subtexts) {
             for (let column of columns) {
-                let filterFn = this._filterValue;
-                let value = column.getFieldValue(row.model);
-                if (column.hasCustomTemplate) {
-                    value = row.model;
-                    filterFn = column.filterFn ? column.filterFn : (value: any, text: string) => false;
-                }
-                if (filterFn(value, subtext)) {
-                    return true;
+                if(this.columnTitleSearch && text) {
+                    if (column.title === this.columnTitleSearch) {
+                        let value: any = column.getFieldValue(row.model);
+                        value = String(value);
+                        if (value.toLowerCase().indexOf(text.toLowerCase()) !== -1) {
+                            return true;
+                        }
+                    }
+                } else {
+                    let filterFn = this._filterValue;
+                    let value = column.getFieldValue(row.model);
+                    if (column.hasCustomTemplate) {
+                        value = row.model;
+                        filterFn = column.filterFn ? column.filterFn : (value: any, text: string) => false;
+                    }
+                    if (filterFn(value, subtext)) {
+                        return true;
+                    }
                 }
             }
         }
@@ -492,6 +500,12 @@ export class SmdDataTable implements DoCheck, AfterContentInit, OnDestroy {
                 }
             );
         this.onAllRowsSelected.emit(this.checked);
+    }
+
+    _onSearchChange(e: string, title: string) {
+        this.searchValue = e;
+        this.columnTitleSearch = title;
+        this._updateRows();
     }
 
     _onRowCheckChange(row: SmdDataRowModel) {

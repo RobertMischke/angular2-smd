@@ -9,12 +9,13 @@
 <md-card class="example-card datatable-card">
     <smd-datatable [models]="models" [paginated]="true" [paginatorRanges]="[10, 25, 50, 100]" [responsive]="responsive">
 
-        <smd-datatable-header [enableFilter]="true" filterLabel="Filter">
-            <smd-datatable-action-button (onClick)="addSample($event)" label="Add"></smd-datatable-action-button>
+        <!--[enableFilter]="true" filterLabel="Filter"-->
+        <smd-datatable-header>
+            <!--<smd-datatable-action-button (onClick)="addSample($event)" label="Add"></smd-datatable-action-button>
 
             <smd-datatable-contextual-button (onClick)="editSample($event)" icon="edit" [minimunSelected]="1" [maxSelected]="1" mdTooltip="Edit the selected element"></smd-datatable-contextual-button>
             <smd-datatable-contextual-button (onClick)="removeSample($event)" icon="delete" [minimunSelected]="1" mdTooltip="Delete the element"></smd-datatable-contextual-button>
-            <smd-datatable-contextual-button (onClick)="openDialog($event)" icon="filter_list" mdTooltip="Open a dialog for filtering?"></smd-datatable-contextual-button>
+            <smd-datatable-contextual-button (onClick)="openDialog($event)" icon="filter_list" mdTooltip="Open a dialog for filtering?"></smd-datatable-contextual-button>-->
         </smd-datatable-header>
 
         <smd-datatable-column searchable="true" title="Name" field="name" sortable="true" titleTooltip="User first name"></smd-datatable-column>
