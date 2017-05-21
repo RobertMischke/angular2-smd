@@ -152,11 +152,11 @@ export class DemoDatatable implements OnInit {
                                              [minimunSelected]="1"></smd-datatable-contextual-button>
         </smd-datatable-header>
 
+        <smd-datatable-column searchable="true" title="Name" field="name" sortable="true" 
+                              titleTooltip="User first name"></smd-datatable-column>
+
         <smd-datatable-column title="Id" field="id" sortable="true" 
                               numeric="true" titleTooltip="The identifier Tooltip"></smd-datatable-column>
-        
-        <smd-datatable-column title="Name" field="name" sortable="true" 
-                              titleTooltip="User first name"></smd-datatable-column>
         
         <smd-datatable-column title="Surname" field="surname" sortable="true"></smd-datatable-column>
         
