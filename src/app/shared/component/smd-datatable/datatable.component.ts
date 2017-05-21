@@ -430,7 +430,6 @@ export class SmdDataTable implements DoCheck, AfterContentInit, OnDestroy {
     }
 
     find(item: SmdDataTableColumnComponent): boolean {
-        console.log(item.searchable);
         return String(item.searchable) === 'true';
     }
 
