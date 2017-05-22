@@ -1,6 +1,6 @@
-import {Component, HostBinding} from "@angular/core";
+import {Component, HostBinding} from '@angular/core';
 
-import "../../public/src/styles.scss";
+import '../../public/src/styles.scss';
 
 @Component({
   selector: 'angular-smd',
@@ -15,21 +15,21 @@ import "../../public/src/styles.scss";
                 <div class="separator"></div>
                 <md-select [(ngModel)]="theme" mdTooltip="Change the Page Theme!!">
                     <md-option value="indigo-pink">indigo-pink</md-option>
-                    <md-option value="deeppurple-amber">deeppurple-amber</md-option>   
-                    <md-option value="pink-bluegrey">pink-bluegrey</md-option>   
-                    <md-option value="purple-green">purple-green</md-option>   
+                    <md-option value="deeppurple-amber">deeppurple-amber</md-option>
+                    <md-option value="pink-bluegrey">pink-bluegrey</md-option>
+                    <md-option value="purple-green">purple-green</md-option>
                 </md-select>
             </md-toolbar>
           </div>
           <div class="smd-content">
               <router-outlet></router-outlet>
           </div>
-          
+
           <md-sidenav #sidenav>
             <md-toolbar color="primary">
                 <md-toolbar-row>Components</md-toolbar-row>
             </md-toolbar>
-            
+
             <md-list>
               <md-list-item routerLink="demo-datatable" (click)="sidenav.close()">
                 <p md-line>DataTable</p>
@@ -56,35 +56,35 @@ import "../../public/src/styles.scss";
         height: 100%;
         display: block;
     }
-    
+
     md-sidenav {
         min-width: 250px;
     }
-    
+
     md-list-item {
         cursor: pointer;
         margin: 5px 3px;
     }
-    
+
     md-list-item:hover {
         background-color: #e3e3e3;
     }
-    
+
     .smd-header {
         width: 100%;
         z-index: 100;
-    }     
-    
+    }
+
     .smd-header span {
         margin-right: 30px;
     }
-         
+
     .smd-content {
         width: 100%;
         height: 100%;
         overflow: auto;
     }
-    
+
     .separator {
         flex: 1 1 auto;
     }
@@ -92,6 +92,6 @@ import "../../public/src/styles.scss";
 })
 export class AppComponent {
 
-  @HostBinding('class') theme:string = 'indigo-pink';
+  @HostBinding('class') theme: string = 'indigo-pink';
 
 }

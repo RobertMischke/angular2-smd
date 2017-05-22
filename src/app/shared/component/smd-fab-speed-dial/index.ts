@@ -1,1 +1,1 @@
-export * from './fab-speed-dial';
+export { SmdFabSpeedDialActionsComponent, SmdFabSpeedDialComponent, SmdFabSpeedDialTriggerComponent } from './fab-speed-dial';

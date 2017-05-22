@@ -1,47 +1,47 @@
-import {NgModule, CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
-import {BrowserModule} from "@angular/platform-browser";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {HttpModule} from "@angular/http";
-import {CommonModule} from "@angular/common";
-import {MaterialModule} from "@angular/material";
+import {NgModule, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {HttpModule} from '@angular/http';
+import {CommonModule} from '@angular/common';
+import {MaterialModule} from '@angular/material';
 
 import {
-    SmdDataTable,
-    SmdDatatableHeader,
-    SmdDatatableActionButton,
-    SmdContextualDatatableButton,
+    SmdDataTableComponent,
+    SmdDatatableHeaderComponent,
+    SmdDatatableActionButtonComponent,
+    SmdContextualDatatableButtonComponent,
     SmdDataTableColumnComponent,
     SmdDataTableRowComponent,
-    SmdDataTableCellComponent,
-    SmdDatatableDialogChangeValue,
+    SmdDataTableCellDirective,
+    SmdDatatableDialogChangeValueComponent,
     SmdPaginatorComponent,
-    SmdFabSpeedDialTrigger,
-    SmdFabSpeedDialActions,
+    SmdFabSpeedDialTriggerComponent,
+    SmdFabSpeedDialActionsComponent,
     SmdFabSpeedDialComponent,
     SmdBottomNavLabelDirective,
     SmdBottomNavGroupComponent,
     SmdBottomNavComponent,
-    SmdErrorMessageComponent,
+    SmdErrorMessageDirective,
     SmdErrorMessagesComponent
-} from "./component";
+} from './component';
 
 let COMPONENTS = [
-    SmdDataTable,
-    SmdDatatableHeader,
-    SmdDatatableActionButton,
-    SmdContextualDatatableButton,
+    SmdDataTableComponent,
+    SmdDatatableHeaderComponent,
+    SmdDatatableActionButtonComponent,
+    SmdContextualDatatableButtonComponent,
     SmdDataTableColumnComponent,
     SmdDataTableRowComponent,
-    SmdDataTableCellComponent,
-    SmdDatatableDialogChangeValue,
+    SmdDataTableCellDirective,
+    SmdDatatableDialogChangeValueComponent,
     SmdPaginatorComponent,
-    SmdFabSpeedDialTrigger,
-    SmdFabSpeedDialActions,
+    SmdFabSpeedDialTriggerComponent,
+    SmdFabSpeedDialActionsComponent,
     SmdFabSpeedDialComponent,
     SmdBottomNavLabelDirective,
     SmdBottomNavGroupComponent,
     SmdBottomNavComponent,
-    SmdErrorMessageComponent,
+    SmdErrorMessageDirective,
     SmdErrorMessagesComponent
 ];
 
@@ -60,7 +60,7 @@ let IMPORTS = [
     exports: COMPONENTS,
     providers: [],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    entryComponents: [SmdDatatableDialogChangeValue]
+    entryComponents: [SmdDatatableDialogChangeValueComponent]
 })
 export class ComponentsModule {
 

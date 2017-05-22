@@ -1,1 +1,1 @@
-export * from './smd-error-message.component';
+export { SmdErrorMessageDirective, SmdErrorMessagesComponent } from './smd-error-message.component';

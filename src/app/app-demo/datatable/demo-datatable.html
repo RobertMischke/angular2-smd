@@ -7,7 +7,7 @@
 </md-card>
 
 <md-card class="example-card datatable-card">
-    <smd-datatable [models]="models" [paginated]="true" [paginatorRanges]="[10, 25, 50, 100]" [responsive]="responsive">
+    <smd-datatable [noCaption]="false" [models]="models" [paginated]="true" [paginatorRanges]="[10, 25, 50, 100]" [responsive]="responsive">
 
         <smd-datatable-header [enableFilter]="true" filterLabel="Filter">
             <smd-datatable-action-button (onClick)="addSample($event)" label="Add"></smd-datatable-action-button>

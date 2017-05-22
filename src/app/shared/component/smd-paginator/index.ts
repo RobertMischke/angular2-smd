@@ -1,1 +1,1 @@
-export * from './paginator.component';
+export { SmdPaginatorComponent } from './paginator.component';

@@ -1,11 +1,11 @@
-import {Component, Input} from "@angular/core";
+import {Component, Input} from '@angular/core';
 
 @Component({
     selector: 'demo-fab-speed-dial',
     templateUrl: './demo-fab-speed-dial.html',
     styleUrls: ['./demo-fab-speed-dial.scss']
 })
-export class DemoFabSpeedDial {
+export class DemoFabSpeedDialComponent {
 
     private _fixed: boolean = false;
 
@@ -14,18 +14,6 @@ export class DemoFabSpeedDial {
     direction: string = 'up';
     animationMode: string = 'fling';
 
-    get fixed() { return this._fixed; }
-    set fixed(fixed: boolean) {
-        this._fixed = fixed;
-        if (this._fixed) {
-            this.open = true;
-        }
-    }
-
-    _click(event: any) {
-        console.log(event);
-    }
-
     tsExample: string = `
     export class DemoFabSpeedDial {
         open: boolean = false;
@@ -33,7 +21,6 @@ export class DemoFabSpeedDial {
         spin: boolean = false;
         direction: string = 'up';
         animationMode: string = 'fling';
-        
         _click(event: any) {
             console.log(event);
         }
@@ -72,4 +59,17 @@ export class DemoFabSpeedDial {
         </smd-fab-speed-dial>
     </md-card>
     `;
+
+    get fixed() { return this._fixed; }
+    set fixed(fixed: boolean) {
+        this._fixed = fixed;
+        if (this._fixed) {
+            this.open = true;
+        }
+    }
+
+    _click(event: any) {
+        console.log(event);
+    }
+
 }

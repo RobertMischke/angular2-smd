@@ -1,19 +1,19 @@
-import {ModuleWithProviders} from "@angular/core";
-import {Routes, RouterModule} from "@angular/router";
-import {APP_BASE_HREF} from "@angular/common";
-import {DemoDatatable} from "./app-demo/datatable/demo-datatable";
-import {DemoFabSpeedDial} from "./app-demo/fab-speed-dial/demo-fab-speed-dial";
-import {DemoHomeComponent} from "./app-demo/demo.home";
-import {DemoBottomNav} from "./app-demo/bottom-nav/demo-bottom-nav";
-import {DemoErrorMessages} from "./app-demo/error-messages/demo-error-messages";
+import {ModuleWithProviders} from '@angular/core';
+import {Routes, RouterModule} from '@angular/router';
+import {APP_BASE_HREF} from '@angular/common';
+import {DemoDatatableComponent} from './app-demo/datatable/demo-datatable';
+import {DemoFabSpeedDialComponent} from './app-demo/fab-speed-dial/demo-fab-speed-dial';
+import {DemoHomeComponent} from './app-demo/demo.home';
+import {DemoBottomNavComponent} from './app-demo/bottom-nav/demo-bottom-nav';
+import {DemoErrorMessagesComponent} from './app-demo/error-messages/demo-error-messages';
 
 const appRoutes: Routes = [
-  { path: '', redirectTo:'/demo-home', pathMatch: 'full' },
+  { path: '', redirectTo: '/demo-home', pathMatch: 'full' },
   { path: 'demo-home', component: DemoHomeComponent },
-  { path: 'demo-datatable', component: DemoDatatable },
-  { path: 'demo-fab-speed-dial', component: DemoFabSpeedDial },
-  { path: 'demo-bottom-nav', component: DemoBottomNav },
-  { path: 'demo-error-messages', component: DemoErrorMessages }
+  { path: 'demo-datatable', component: DemoDatatableComponent },
+  { path: 'demo-fab-speed-dial', component: DemoFabSpeedDialComponent },
+  { path: 'demo-bottom-nav', component: DemoBottomNavComponent },
+  { path: 'demo-error-messages', component: DemoErrorMessagesComponent }
 ];
 
 export const appRoutingProviders: any[] = [

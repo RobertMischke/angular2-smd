@@ -1,1 +1,8 @@
-export * from './datatable.component';
+export { SmdContextualDatatableButtonComponent,
+         SmdDataTableCellDirective,
+         SmdDatatableActionButtonComponent,
+         SmdDataTableColumnComponent,
+         SmdDataTableComponent,
+         SmdDatatableDialogChangeValueComponent,
+         SmdDatatableHeaderComponent,
+         SmdDataTableRowComponent } from './datatable.component';

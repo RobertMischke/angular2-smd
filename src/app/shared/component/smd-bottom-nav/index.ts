@@ -1,1 +1,1 @@
-export * from './smd-bottom-nav.component';
+export { SmdBottomNavComponent, SmdBottomNavGroupComponent, SmdBottomNavLabelDirective } from './smd-bottom-nav.component';

@@ -1,2 +1,2 @@
-require("debug");
-require("dateformat");
+require('debug');
+require('dateformat');

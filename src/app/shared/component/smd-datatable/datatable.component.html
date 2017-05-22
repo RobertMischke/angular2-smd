@@ -1,6 +1,6 @@
 <div class="smd-table-container">
     <table class="smd-data-table full-width">
-        <caption>
+        <caption *ngIf="!noCaption">
             <ng-content select="smd-datatable-header"></ng-content>
         </caption>
         <thead>
@@ -21,10 +21,10 @@
                 <th [attr.colspan]="columns.length + (_shouldRenderCheckbox() ? 1 : 0)">
                     <md-checkbox [(ngModel)]="checked" (change)="_onMasterCheckChange()">
                     </md-checkbox>
-                    <md-input-container floatPlaceholder="never" *ngIf="responsiveSearch">
+                    <!--<md-input-container floatPlaceholder="never" *ngIf="responsiveSearch">
                         <input mdInput [(ngModel)]="search" (ngModelChange)="_onSearchChange($event, responsiveSearch);" type="text">
                         <md-icon mdSuffix class="material-icons">search</md-icon>
-                    </md-input-container>
+                    </md-input-container>-->
                 </th>
             </tr>
         </thead>
@@ -44,14 +44,15 @@
                     </span>
                 </td>
             </tr>
-            <tr *ngIf="rows.length == 0 && responsive">
+            <!-- Searchable @TODO Complete in Responsive -->
+            <!--<tr *ngIf="rows.length == 0 && responsiveSearch?.length > 0">
                 <th [attr.colspan]="columns.length + (_shouldRenderCheckbox() ? 1 : 0)">
                     <md-input-container floatPlaceholder="never">
                         <input mdInput [(ngModel)]="search" (ngModelChange)="_onSearchChange($event, responsiveSearch);" type="text">
                         <md-icon mdSuffix class="material-icons">search</md-icon>
                     </md-input-container>
                 </th>
-            </tr>
+            </tr>-->
             <tr *ngIf="rows.length == 0">
                 <td [attr.colspan]="columns.length + (_shouldRenderCheckbox() ? 1 : 0)">
                     <span>

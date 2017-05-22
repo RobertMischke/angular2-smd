@@ -1,11 +1,11 @@
-import {Component, Input, Output, EventEmitter, OnInit, ViewEncapsulation} from "@angular/core";
+import {Component, Input, Output, EventEmitter, OnInit, ViewEncapsulation} from '@angular/core';
 
 export class SmdPaginationModel {
-    constructor(public page : number,
-                public size : number) {
+    constructor(public page: number,
+                public size: number) {
     }
 
-    public isInsidePage(index : number):boolean {
+    public isInsidePage(index: number): boolean {
         let end = (this.page * this.size) - 1;
         let begin = end - this.size + 1;
         return index >= begin && index <= end;
@@ -13,23 +13,23 @@ export class SmdPaginationModel {
 }
 
 @Component({
-    selector: "smd-paginator",
-    templateUrl: "./paginator.component.html",
-    styleUrls: ["./paginator.component.scss"],
+    selector: 'smd-paginator',
+    templateUrl: './paginator.component.html',
+    styleUrls: ['./paginator.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class SmdPaginatorComponent implements OnInit {
 
-    private _selectedRange : number;
+    private _selectedRange: number;
 
-    @Input() selectedPage : number = 1;
-    @Input() count : number = 0;
-    @Input() ranges : number[] = [10, 25, 50, 100];
+    @Input() selectedPage: number = 1;
+    @Input() count: number = 0;
+    @Input() ranges: number[] = [10, 25, 50, 100];
     @Input() set selectedRange(selectedRange: number) {
         let current = this._selectedRange;
         this._selectedRange = selectedRange;
 
-        if (current != this._selectedRange) {
+        if (current !== this._selectedRange) {
             this.reset();
         }
     }
@@ -38,7 +38,7 @@ export class SmdPaginatorComponent implements OnInit {
         return this._selectedRange;
     }
 
-    @Output() pageChange : EventEmitter<SmdPaginationModel> = new EventEmitter<SmdPaginationModel>();
+    @Output() pageChange: EventEmitter<SmdPaginationModel> = new EventEmitter<SmdPaginationModel>();
 
     ngOnInit(): void {
         if (!this.selectedRange) {
@@ -65,17 +65,17 @@ export class SmdPaginatorComponent implements OnInit {
         this.pageChange.emit(this.currentPage);
     }
 
-    get pageCount():number {
+    get pageCount(): number {
         let pageCount = (this.count / this.selectedRange) + ((this.count % this.selectedRange) > 0 ? 1 : 0);
-        return pageCount ? parseInt('' + pageCount) : 0;
+        return pageCount ? parseInt('' + pageCount, null) : 0;
     }
 
-    get pageStart():number {
-        return parseInt('' + ((this.selectedPage * this.selectedRange) - this.selectedRange + 1));
+    get pageStart(): number {
+        return parseInt('' + ((this.selectedPage * this.selectedRange) - this.selectedRange + 1), null);
     }
 
-    get pageEnd():number {
-        return parseInt('' + Math.min((this.selectedPage * this.selectedRange), this.count));
+    get pageEnd(): number {
+        return parseInt('' + Math.min((this.selectedPage * this.selectedRange), this.count), null);
     }
 
     get currentPage() {

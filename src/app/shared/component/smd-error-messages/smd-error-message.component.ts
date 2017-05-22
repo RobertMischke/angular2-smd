@@ -9,36 +9,40 @@ import {
     ViewContainerRef,
     TemplateRef,
     ViewChildren,
+    HostBinding,
+    HostListener,
     OnDestroy
-} from "@angular/core";
-import {FormControl, NgModel} from "@angular/forms";
-import {Subscription} from "rxjs";
+} from '@angular/core';
+import {FormControl, NgModel} from '@angular/forms';
+import {Subscription} from 'rxjs';
 
 @Directive({
-    selector: "ng-template[smdErrorMessage]",
-    host: {
-        '[class.smd-error-message]': 'true',
-        '[class.smd-visible]': 'visible'
-    }
+    selector: 'ng-template[smdErrorMessage]',
+    // host: {
+    //     '[class.smd-error-message]': 'true',
+    //     '[class.smd-visible]': 'visible'
+    // }
 })
-export class SmdErrorMessageComponent {
-    private visible:boolean = false;
+export class SmdErrorMessageDirective {
+    private visible: boolean = false;
 
     @Input() for: string | string[];
     @Input() error: any;
+    @HostBinding('class.smd-error-message') get er() { return true; };
+    @HostBinding('class.smd-visible') get vis() { return 'visible'; };
 
-    get forList():string[] {
+    get forList(): string[] {
         if (typeof this.for === 'string') {
             this.for = [this.for];
         }
         return this.for;
     }
 
-    constructor(private viewContainer: ViewContainerRef, private template: TemplateRef<SmdErrorMessageComponent>) {
+    constructor(private viewContainer: ViewContainerRef, private template: TemplateRef<SmdErrorMessageDirective>) {
     }
 
-    contains(key: string):boolean {
-        return this.forList && !!this.forList.find((elem) => elem == key);
+    contains(key: string): boolean {
+        return this.forList && !!this.forList.find((elem) => elem === key);
     }
 
     show(error: any) {
@@ -58,12 +62,16 @@ export class SmdErrorMessageComponent {
 }
 
 @Component({
-    selector: "smd-error-messages",
+    selector: 'smd-error-messages',
     template: `
         <ng-content select="[smdErrorMessage]"></ng-content>
         <ng-template smdErrorMessage for="required">Required Field</ng-template>
-        <ng-template smdErrorMessage for="minlength" let-myError="error">The field must have at least {{myError.requiredLength}} characters</ng-template>
-        <ng-template smdErrorMessage for="maxlength" let-myError="error">The field must have less than {{myError.requiredLength}} characters</ng-template>
+        <ng-template smdErrorMessage for="minlength" let-myError="error">
+            The field must have at least {{myError.requiredLength}} characters
+        </ng-template>
+        <ng-template smdErrorMessage for="maxlength" let-myError="error">
+            The field must have less than {{myError.requiredLength}} characters
+        </ng-template>
     `,
     styleUrls: ['smd-error-message.component.scss'],
     encapsulation: ViewEncapsulation.None
@@ -74,8 +82,8 @@ export class SmdErrorMessagesComponent implements OnInit, OnDestroy {
 
     @Input() control: NgModel | FormControl;
 
-    @ContentChildren(SmdErrorMessageComponent) _messages: QueryList<SmdErrorMessageComponent>;
-    @ViewChildren(SmdErrorMessageComponent) _internalMessages: QueryList<SmdErrorMessageComponent>;
+    @ContentChildren(SmdErrorMessageDirective) _messages: QueryList<SmdErrorMessageDirective>;
+    @ViewChildren(SmdErrorMessageDirective) _internalMessages: QueryList<SmdErrorMessageDirective>;
 
     ngOnInit(): void {
         if ((<NgModel>this.control).control) {
@@ -110,7 +118,7 @@ export class SmdErrorMessagesComponent implements OnInit, OnDestroy {
         if (this.formControl.touched) {
             let messages = this.mergeMessages();
             messages.forEach((message) => {
-                let error:any = null;
+                let error: any = null;
 
                 for (let key in this.formControl.errors) {
                     if (message.contains(key)) {
@@ -129,7 +137,7 @@ export class SmdErrorMessagesComponent implements OnInit, OnDestroy {
     }
 
     private mergeMessages() {
-        let newMessages: SmdErrorMessageComponent[] = [];
+        let newMessages: SmdErrorMessageDirective[] = [];
         let keys = {};
 
         this._messages.forEach((message) => {

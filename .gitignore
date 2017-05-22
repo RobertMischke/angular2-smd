@@ -4,7 +4,8 @@
 */target
 /target
 /bin
-/dist
+dist/
+/dist/*.js
 
 *.settings
 *.classpath

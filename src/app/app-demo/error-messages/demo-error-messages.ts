@@ -1,50 +1,29 @@
-import {Component, OnInit} from "@angular/core";
-import {Validators, FormBuilder, FormGroup} from "@angular/forms";
+import {Component, OnInit} from '@angular/core';
+import {Validators, FormBuilder, FormGroup} from '@angular/forms';
 
 @Component({
     selector: 'demo-fab-speed-dial',
     templateUrl: './demo-error-messages.html',
     styleUrls: ['./demo-error-messages.scss']
 })
-export class DemoErrorMessages implements OnInit {
+export class DemoErrorMessagesComponent implements OnInit {
     requiredField: string;
     minLengthField: string;
     requiredFieldCustomMessage: string;
 
     myReactiveForm: FormGroup;
 
-    constructor(private fb: FormBuilder) {
-    }
-
-    ngOnInit(): void {
-        this.myReactiveForm = this.fb.group({
-            'requiredFieldReactive': ['', Validators.required],
-            'minLengthFieldReactive': ['', Validators.minLength(3)],
-            'requiredFieldCustomMessageReactive': ['', Validators.required],
-            'requiredFieldCustomValidationReactive': ['', this.myCustomReactiveValidation()]
-        })
-    }
-
-    myCustomReactiveValidation(): any {
-        return (control: any): {[key: string]: any} => {
-            if (!control.value) {
-                return;
-            }
-            return control.value == 'AAA' ? null : {myValidationError: {validItem: 'AAA'}};
-        };
-    }
-
     tsExample: string = `
     export class DemoErrorMessages implements OnInit {
         requiredField: string;
         minLengthField: string;
         requiredFieldCustomMessage: string;
-    
+
         myReactiveForm: FormGroup;
-    
+
         constructor(private fb: FormBuilder) {
         }
-    
+
         ngOnInit(): void {
             this.myReactiveForm = this.fb.group({
                 'requiredFieldReactive': ['', Validators.required],
@@ -53,7 +32,7 @@ export class DemoErrorMessages implements OnInit {
                 'requiredFieldCustomValidationReactive': ['', this.myCustomReactiveValidation()]
             })
         }
-    
+
         myCustomReactiveValidation(): any {
             return (control: any): {[key: string]: any} => {
                 if (!control.value) {
@@ -94,7 +73,7 @@ export class DemoErrorMessages implements OnInit {
             </div>
         </div>
     </md-card>
-    
+
     <md-card>
         <md-card-title>Reactive Form</md-card-title>
         <form [formGroup]="myReactiveForm">
@@ -115,7 +94,8 @@ export class DemoErrorMessages implements OnInit {
             <div class="row">
                 <div class="column">
                     <md-input-container>
-                        <input type="text" mdInput placeholder="Required Field (With Custom Message)" formControlName="requiredFieldCustomMessageReactive" required/>
+                        <input type="text" mdInput placeholder="Required Field (With Custom Message)"
+                            formControlName="requiredFieldCustomMessageReactive" required/>
                     </md-input-container>
                     <smd-error-messages [control]="myReactiveForm.get('requiredFieldCustomMessageReactive')">
                         <ng-template smdErrorMessage for="required">This Field is Required with a custom message</ng-template>
@@ -123,15 +103,39 @@ export class DemoErrorMessages implements OnInit {
                 </div>
                 <div class="column">
                     <md-input-container>
-                        <input type="text" mdInput placeholder="With Custom Validation" formControlName="requiredFieldCustomValidationReactive"/>
+                        <input type="text" mdInput placeholder="With Custom Validation"
+                             formControlName="requiredFieldCustomValidationReactive"/>
                     </md-input-container>
                     <smd-error-messages [control]="myReactiveForm.get('requiredFieldCustomValidationReactive')">
-                        <ng-template smdErrorMessage for="myValidationError" let-error="error">Try to type '{{error.validItem}}'</ng-template>
+                        <ng-template smdErrorMessage for="myValidationError"
+                            let-error="error">Try to type '{{error.validItem}}'</ng-template>
                     </smd-error-messages>
                 </div>
             </div>
         </form>
     </md-card>
     `;
+
+    constructor(private fb: FormBuilder) {
+    }
+
+    ngOnInit(): void {
+        this.myReactiveForm = this.fb.group({
+            'requiredFieldReactive': ['', Validators.required],
+            'minLengthFieldReactive': ['', Validators.minLength(3)],
+            'requiredFieldCustomMessageReactive': ['', Validators.required],
+            'requiredFieldCustomValidationReactive': ['', this.myCustomReactiveValidation()]
+        })
+    }
+
+    myCustomReactiveValidation(): any {
+        return (control: any): {[key: string]: any} => {
+            if (!control.value) {
+                return;
+            }
+            return control.value === 'AAA' ? null : {myValidationError: {validItem: 'AAA'}};
+        };
+    }
+
 
 }

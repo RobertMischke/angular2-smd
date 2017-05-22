@@ -12,10 +12,11 @@ import {
     style,
     transition,
     animate, OnInit, Input,
-} from "@angular/core";
+    HostBinding, HostListener
+} from '@angular/core';
 
 @Directive({
-    selector: "ng-template[smdBottomNavLabel]",
+    selector: 'ng-template[smdBottomNavLabel]',
 })
 export class SmdBottomNavLabelDirective {
 
@@ -24,7 +25,7 @@ export class SmdBottomNavLabelDirective {
 }
 
 @Component({
-    selector: "smd-bottom-nav",
+    selector: 'smd-bottom-nav',
     template: `
         <ng-content select="[smdBottomNavLabel]"></ng-content>
         <ng-template #contentTemplate>
@@ -34,7 +35,7 @@ export class SmdBottomNavLabelDirective {
 })
 export class SmdBottomNavComponent {
 
-    public state:'active' | 'inactive';
+    public state: 'active' | 'inactive';
 
     @Input() public color: string = 'primary';
 
@@ -44,13 +45,13 @@ export class SmdBottomNavComponent {
 }
 
 @Component({
-    selector: "smd-bottom-nav-group",
+    selector: 'smd-bottom-nav-group',
     templateUrl: './smd-bottom-nav.component.html',
     styleUrls: ['./smd-bottom-nav.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    host: {
-        '[class]': '_getClasses()'
-    },
+    // host: {
+    //     '[class]': '_getClasses()'
+    // },
     animations: [
         trigger('itemState', [
             state('inactive', style({opacity: '0'})),
@@ -62,16 +63,18 @@ export class SmdBottomNavComponent {
     ]
 })
 export class SmdBottomNavGroupComponent implements OnInit {
-    _currentIndex:number;
+    _currentIndex: number;
+
+    @HostBinding('class') get getclas() { return this._getClasses(); };
 
     get currentIndex() {
         return this._currentIndex;
     }
-    set currentIndex(index:number) {
+    set currentIndex(index: number) {
         this._currentIndex = index;
         Promise.resolve(null).then(() => {
             this.navs.forEach((item, i) => {
-                if (i == this.currentIndex) {
+                if (i === this.currentIndex) {
                     item.state = 'active';
                 } else {
                     item.state = 'inactive';
@@ -86,7 +89,7 @@ export class SmdBottomNavGroupComponent implements OnInit {
         this.currentIndex = 0;
     }
 
-    setActiveIndex(index:number) {
+    setActiveIndex(index: number) {
         let previousIndex = this.currentIndex;
         this.currentIndex = index;
     }
@@ -95,8 +98,8 @@ export class SmdBottomNavGroupComponent implements OnInit {
         return `smd-${this._getSelectedItem(this.currentIndex).color}`
     }
 
-    _getSelectedItem(index:number) {
-        return this.navs.find((item, i) => i == index);
+    _getSelectedItem(index: number) {
+        return this.navs.find((item, i) => i === index);
     }
 
 }

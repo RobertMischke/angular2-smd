@@ -1,4 +1,4 @@
-import {Component, ViewEncapsulation} from "@angular/core";
+import {Component, ViewEncapsulation} from '@angular/core';
 
 // Using ViewEncapsulation.None so we can create a custom color for the bottom nav component
 @Component({
@@ -7,6 +7,6 @@ import {Component, ViewEncapsulation} from "@angular/core";
     styleUrls: ['./demo-bottom-nav.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class DemoBottomNav {
+export class DemoBottomNavComponent {
     items = Array.apply(null, {length: 80}).map((v: any, i: number) => i);
 }
