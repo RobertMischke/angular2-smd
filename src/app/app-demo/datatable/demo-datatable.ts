@@ -3,6 +3,7 @@ import {DatePipe} from '@angular/common';
 
 export class SampleModel {
     constructor(public id?: number,
+                public role?: number,
                 public name?: string,
                 public surname?: string,
                 public birthDate?: Date,
@@ -126,6 +127,7 @@ export class DemoDatatableComponent implements OnInit {
                               (onFieldChange)="fieldChanged($event)"></smd-datatable-column>
     </smd-datatable>
     `;
+    private roles = ['Admin', 'Staff', 'Finance'];
 
     ngOnInit(): void {
         // Using a promisse here so angular will start another detect lifecycle
@@ -135,6 +137,7 @@ export class DemoDatatableComponent implements OnInit {
                 .map(function (element: any, index: any) {
                     return {
                         id: index,
+                        role: (Math.round(Math.random() * 3)),
                         name: 'Name ' + index,
                         surname: 'Surname ' + index,
                         birthDate: (new Date().getTime() + (index * 10000010)),
@@ -142,6 +145,16 @@ export class DemoDatatableComponent implements OnInit {
                         comment: (index <= 5 ? 'comment ' + index : null)
                     };
                 });
+            let newModels = [{
+                id: '',
+                role: (Math.round(Math.random() * 3)),
+                name: 'Name ' + 1,
+                surname: 'Surname ' + 1,
+                birthDate: (new Date().getTime() + (1 * 10000010)),
+                avatar: (1 % 2 === 1 ? 'search' : 'add'),
+                comment: (1 <= 5 ? 'comment ' + 1 : null)
+            }];
+            this.models = this.models.concat(newModels, this.models);
         });
     }
 
@@ -154,6 +167,11 @@ export class DemoDatatableComponent implements OnInit {
             return 1 * dir;
         }
         return 0;
+    }
+
+    _changeRole(role: number): string {
+        role = Number(role);
+        return this.roles[role] ? this.roles[role] : this.roles[2];
     }
 
     _filterByBirthDate(a: SampleModel, text: string) {
@@ -179,8 +197,9 @@ export class DemoDatatableComponent implements OnInit {
         console.log(event);
     }
 
-    openDialog(event: any) {
+    openDialog(event: any, data: any) {
         console.log('Open Dialog');
         console.log(event);
+        console.log(data);
     }
 }

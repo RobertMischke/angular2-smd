@@ -5,8 +5,8 @@
         </caption>
         <thead>
             <tr>
-                <th *ngIf="_shouldRenderCheckbox()">
-                    <md-checkbox [(ngModel)]="checked" (change)="_onMasterCheckChange()">
+                <th *ngIf="_shouldRenderCheckbox() || _shouldRenderSingleCheckbox()">
+                    <md-checkbox [hidden]="_shouldRenderSingleCheckbox()" [(ngModel)]="checked" (change)="_onMasterCheckChange()">
                     </md-checkbox>
                 </th>
                 <th *ngFor="let column of columns" [class.smd-datatable-column-sortable]="column.sortable" [class.smd-numeric-column]="column.numeric" [class.smd-searchable]="column.searchable" (click)="_sortColumn(column)">
@@ -17,8 +17,8 @@
                     </md-input-container>
                 </th>
             </tr>
-            <tr *ngIf="responsive && _shouldRenderCheckbox()" class="smd-datatable-responsive-header">
-                <th [attr.colspan]="columns.length + (_shouldRenderCheckbox() ? 1 : 0)">
+            <tr *ngIf="responsive && ( _shouldRenderCheckbox() || _shouldRenderSingleCheckbox() )" class="smd-datatable-responsive-header">
+                <th [attr.colspan]="columns.length + ( (_shouldRenderCheckbox() || _shouldRenderSingleCheckbox() ) ? 1 : 0)">
                     <md-checkbox [(ngModel)]="checked" (change)="_onMasterCheckChange()">
                     </md-checkbox>
                     <!--<md-input-container floatPlaceholder="never" *ngIf="responsiveSearch">
@@ -29,12 +29,12 @@
             </tr>
         </thead>
         <tbody *ngIf="rows?.length > 0">
-            <tr #dataTableRow smd-datatable-row *ngFor="let row of visibleRows" [class.is-selected]="row.checked" [row]="row" [renderCheckbox]="_shouldRenderCheckbox()" [columns]="columns"></tr>
+            <tr #dataTableRow smd-datatable-row *ngFor="let row of visibleRows" [class.is-selected]="row.checked" [row]="row" [renderCheckbox]="_shouldRenderCheckbox() || _shouldRenderSingleCheckbox()" [columns]="columns"></tr>
         </tbody>
         <tfoot>
             <!-- Using hidden because *ngIf is conflicting with ViewChild(SmdPaginatorComponent) -->
             <tr [hidden]="!paginated || rows.length == 0">
-                <td [attr.colspan]="columns.length + (_shouldRenderCheckbox() ? 1 : 0)">
+                <td [attr.colspan]="columns.length + ( (_shouldRenderCheckbox() || _shouldRenderSingleCheckbox() ) ? 1 : 0)">
                     <span>
                         <smd-paginator
                                 [count]="rowCount"
@@ -54,7 +54,7 @@
                 </th>
             </tr>-->
             <tr *ngIf="rows.length == 0">
-                <td [attr.colspan]="columns.length + (_shouldRenderCheckbox() ? 1 : 0)">
+                <td [attr.colspan]="columns.length + ( (_shouldRenderCheckbox() || _shouldRenderSingleCheckbox() ) ? 1 : 0)">
                     <span>
                         There are no items
                     </span>

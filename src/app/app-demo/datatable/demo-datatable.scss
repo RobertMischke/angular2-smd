@@ -1,46 +1,42 @@
 body {
-  width: 100%;
+    width: 100%;
 }
 
 .example-card {
-  margin: 20px 80px 20px 80px;
-  width: calc(100% - 160px);
-
-  &.datatable-card {
-    // FIXME - Card really needs to use a 20px padding as default?
-    padding: 0 !important;
-  }
-
-  &:not(.datatable-card) {
-    width: calc(100% - 205px);
-  }
+    margin: 20px 80px 20px 80px;
+    width: calc(100% - 160px);
+    &.datatable-card {
+        // FIXME - Card really needs to use a 20px padding as default?
+        padding: 0 !important;
+    }
+    &:not(.datatable-card) {
+        width: calc(100% - 205px);
+    }
 }
 
 .demo-tab-group {
-  border: 1px solid #e0e0e0;
-  margin-bottom: 40px;
-  .mat-tab-header {
-    background: #f9f9f9;
-  }
-  .mat-tab-body-content {
-    padding: 12px;
-  }
-
-  .tab-content {
-    width: 100%;
-    max-height: 800px;
-    display: block;
-    overflow: auto;
-  }
+    border: 1px solid #e0e0e0;
+    margin-bottom: 40px;
+    .mat-tab-header {
+        background: #f9f9f9;
+    }
+    .mat-tab-body-content {
+        padding: 12px;
+    }
+    .tab-content {
+        width: 100%;
+        max-height: 800px;
+        display: block;
+        overflow: auto;
+    }
 }
 
 @media screen and (max-width: 60em) {
-  .example-card {
-    margin: 20px 5px 20px 5px;
-    width: calc(100% - 20px);
-
-    &:not(.datatable-card) {
-      width: calc(100% - 45px);
+    .example-card {
+        margin: 20px 5px 20px 5px;
+        width: calc(100% - 20px);
+        &:not(.datatable-card) {
+            width: calc(100% - 45px);
+        }
     }
-  }
 }

@@ -106,7 +106,9 @@ export class SmdDataTableCellDirective implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        this.childView.destroy();
+        if (this.childView) {
+            this.childView.destroy();
+        }
     }
 }
 
@@ -135,13 +137,16 @@ export class SmdDataTableCellDirective implements OnInit, OnDestroy {
         </td>
     `
 })
-export class SmdDataTableRowComponent {
+export class SmdDataTableRowComponent implements OnInit {
     @Input() row: SmdDataRowModel;
     @Input() renderCheckbox: boolean;
     @Input() columns: SmdDataTableColumnComponent[];
 
     constructor(@Inject(forwardRef(() => SmdDataTableComponent)) private _parent: SmdDataTableComponent,
                 private dialog: MdDialog, private viewContainerRef: ViewContainerRef) {
+    }
+    ngOnInit() {
+
     }
 
     _onClick(column: SmdDataTableColumnComponent, model: any) {
@@ -198,6 +203,7 @@ export class SmdDataTableColumnComponent implements OnInit, OnChanges {
     @Input() editable: boolean = false;
     @Input() editablePlaceholder: string;
     @Input() searchable: boolean = false;
+    @Input() notNull: boolean = false;
     @Input() search: string;
 
     @ContentChild(TemplateRef) _customTemplate: TemplateRef<Object>;
@@ -232,7 +238,8 @@ export class SmdDataTableColumnComponent implements OnInit, OnChanges {
     }
 
     getFieldValue(model: any) {
-        return model[this.field];
+        let value = model[this.field];
+        return value;
     }
 }
 
@@ -331,6 +338,8 @@ export class SmdDatatableHeaderComponent implements AfterContentInit, OnDestroy 
     @Input() enableFilter: boolean = false;
     @Input() filterLabel: string = 'Filter';
     @Input() filterDelay: number = 500;
+    @Input() multiCheck: boolean = false;
+    @Input() singleCheck: boolean = false;
 
     @ContentChildren(SmdDatatableActionButtonComponent) actionButtons: QueryList<SmdDatatableActionButtonComponent>;
     @ContentChildren(SmdContextualDatatableButtonComponent) contextualButtons: QueryList<SmdContextualDatatableButtonComponent>;
@@ -351,6 +360,19 @@ export class SmdDatatableHeaderComponent implements AfterContentInit, OnDestroy 
             ).length > 0;
         } else {
             render = false;
+        }
+        if (this.multiCheck) {
+            render = true;
+        } else {
+            render = false;
+        }
+        return render;
+    }
+
+    public shouldRenderSingleCheckbox() {
+        let render = false;
+        if (this.singleCheck) {
+            render = true;
         }
         return render;
     }
@@ -404,7 +426,11 @@ export class SmdDataTableComponent implements DoCheck, AfterContentInit, OnDestr
     @HostBinding('class.smd-responsive') get cRes() { return this.responsive; }
 
     get rowCount(): number {
-        return this.rows.length;
+        let count = this.rows.length;
+        if (this.pageCount) {
+            count = this.pageCount;
+        }
+        return count;
     }
 
     @ViewChild(SmdPaginatorComponent) paginatorComponent: SmdPaginatorComponent;
@@ -417,7 +443,9 @@ export class SmdDataTableComponent implements DoCheck, AfterContentInit, OnDestr
     @Input() paginatorRanges: number[] = [10, 25, 50, 100];
     @Input() responsive: boolean = false;
     @Input() noCaption: boolean = false;
+    @Input() pageCount: number;
 
+    // tslint:disable-next-line:max-line-length
     @Output() onRowSelected: EventEmitter<{model: any, checked: boolean}> = new EventEmitter<{model: any, checked: boolean}>();
     @Output() onAllRowsSelected: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -623,5 +651,9 @@ export class SmdDataTableComponent implements DoCheck, AfterContentInit, OnDestr
 
     private _shouldRenderCheckbox() {
         return this.rows.length > 0 && this.header.shouldRenderCheckbox();
+    }
+
+    private _shouldRenderSingleCheckbox() {
+        return this.rows.length > 0 && this.header.shouldRenderSingleCheckbox();
     }
 }
