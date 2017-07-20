@@ -1,4 +1,4 @@
-import {Component, Input, Output, EventEmitter, OnInit, ViewEncapsulation} from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, ViewEncapsulation } from '@angular/core';
 
 export class SmdPaginationModel {
     constructor(public page: number,
@@ -46,14 +46,14 @@ export class SmdPaginatorComponent implements OnInit {
         }
     }
 
-    onPreviousClick() {
+    onPreviousClick(event: MouseEvent) {
         if (this.selectedPage > 1) {
             this.selectedPage -= 1;
             this.pageChange.emit(this.currentPage);
         }
     }
 
-    onNextClick() {
+    onNextClick(event: MouseEvent) {
         if (this.selectedPage < this.pageCount) {
             this.selectedPage += 1;
             this.pageChange.emit(this.currentPage);

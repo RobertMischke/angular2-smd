@@ -1,6 +1,8 @@
 export { SmdContextualDatatableButtonComponent,
          SmdDataTableCellDirective,
+         SmdDataTableClickableDirective,
          SmdDatatableActionButtonComponent,
+         SmdDatatableTitleComponent,
          SmdDataTableColumnComponent,
          SmdDataTableComponent,
          SmdDatatableDialogChangeValueComponent,

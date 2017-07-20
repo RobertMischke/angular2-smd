@@ -16,19 +16,19 @@ import {
     EmbeddedViewRef,
     TemplateRef,
     ViewContainerRef,
-    ElementRef,
     AfterContentInit,
     OnInit,
     OnChanges,
     OnDestroy,
     HostBinding,
     HostListener,
-    ChangeDetectorRef
+    ChangeDetectorRef,
+    AfterViewChecked
 } from '@angular/core';
-import {isNullOrUndefined} from 'util';
-import {SmdPaginatorComponent} from '../smd-paginator/paginator.component';
-import {Subscription} from 'rxjs/Subscription';
-import {MdDialogRef, MdDialog, MdDialogConfig} from '@angular/material';
+import { isNullOrUndefined } from 'util';
+import { SmdPaginatorComponent } from '../smd-paginator/paginator.component';
+import { Subscription } from 'rxjs/Subscription';
+import { MdDialogRef, MdDialog, MdDialogConfig } from '@angular/material';
 
 let columnIds = 0;
 
@@ -71,9 +71,9 @@ export class SmdDataRowModel {
 })
 export class SmdDatatableDialogChangeValueComponent {
 
-    public title: string;
-    public placeholder: string;
-    public value: string;
+    title: string;
+    placeholder: string;
+    value: string;
 
     constructor(public dialogRef: MdDialogRef<SmdDatatableDialogChangeValueComponent>) {
     }
@@ -88,16 +88,16 @@ export class SmdDatatableDialogChangeValueComponent {
 }
 
 @Directive({
-    selector: '[smd-data-cell]'
+    selector: '[smdDataCell]'
 })
-export class SmdDataTableCellDirective implements OnInit, OnDestroy {
+export class SmdDataTableCellDirective implements OnInit, OnDestroy, OnChanges {
     @Input() column: SmdDataTableColumnComponent;
     @Input() data: any;
     @Input() templ: TemplateRef<SmdDataTableCellDirective>;
 
     childView: EmbeddedViewRef<SmdDataTableCellDirective>;
 
-    constructor(private _viewContainer: ViewContainerRef, private _elementRef: ElementRef) { }
+    constructor(private _viewContainer: ViewContainerRef) { }
 
     ngOnInit(): void {
         if (this._viewContainer && this.templ) {
@@ -110,18 +110,46 @@ export class SmdDataTableCellDirective implements OnInit, OnDestroy {
             this.childView.destroy();
         }
     }
+
+    ngOnChanges(): void {
+      if (this.childView) {
+        this.childView.reattach();
+      }
+    }
+
+}
+
+@Directive({
+  selector: 'td[smdDataTableClickable]'
+})
+export class SmdDataTableClickableDirective {
+    dataTable: SmdDataTableRowComponent;
+    parentDataTable: any;
+
+    @HostListener('click', ['$event']) getClickFn(event: MouseEvent) {
+      if (this._parent.clickable) {
+        return this.parentDataTable.clickFn.emit(this.dataTable.row.model);
+      }
+    }
+
+    constructor(@Inject(forwardRef(() => SmdDataTableComponent)) private _parent: SmdDataTableComponent,
+                @Inject(forwardRef(() => SmdDataTableRowComponent)) private _row: SmdDataTableRowComponent) {
+                  this.parentDataTable = this._parent;
+                  this.dataTable = this._row;
+    }
 }
 
 @Component({
-    selector: '[smd-datatable-row]',
+    selector: 'smd-datatable-row',
     template: `
         <td *ngIf="renderCheckbox" class="smd-datatable-body-checkbox">
             <div class="smd-checkbox">
-                <md-checkbox [(ngModel)]="row.checked" (change)="_parent._onRowCheckChange(row)">
+                <md-checkbox [(ngModel)]="row.checked"
+                  (change)="parentDataTable._onRowCheckChange(row)" color="primary" [disabled]="parentDataTable.disableCheckbox">
                 </md-checkbox>
             </div>
         </td>
-        <td *ngFor="let column of columns"
+        <td smdDataTableClickable *ngFor="let column of columns"
             [class.smd-numeric-column]="column.numeric"
             [class.smd-editable]="column.editable"
             (click)="_onClick(column, row.model)">
@@ -129,24 +157,31 @@ export class SmdDataTableCellDirective implements OnInit, OnDestroy {
                 {{column.title}}
             </span>
             <span class="smd-cell-data">
-                <ng-template smd-data-cell [column]="column" [data]="row.model" [templ]="column.template"></ng-template>
+                <ng-template smdDataCell [column]="column" [data]="row.model" [templ]="column.template"></ng-template>
                 <span class="smd-editable-field-placeholder" *ngIf="column.editable && !row.model[column.field]">
                     {{column.editablePlaceholder}}
                 </span>
             </span>
         </td>
-    `
+    `,
 })
 export class SmdDataTableRowComponent implements OnInit {
     @Input() row: SmdDataRowModel;
     @Input() renderCheckbox: boolean;
     @Input() columns: SmdDataTableColumnComponent[];
+    parentDataTable: any;
 
+    // tslint:disable-next-line:no-forward-ref
     constructor(@Inject(forwardRef(() => SmdDataTableComponent)) private _parent: SmdDataTableComponent,
                 private dialog: MdDialog, private viewContainerRef: ViewContainerRef) {
+                  this.parentDataTable = this._parent;
     }
-    ngOnInit() {
 
+    /**
+     * @TODO: Dynamically add Clickable Directive to td
+     */
+    ngOnInit() {
+      // Init
     }
 
     _onClick(column: SmdDataTableColumnComponent, model: any) {
@@ -182,14 +217,13 @@ export class SmdDataTableRowComponent implements OnInit {
 
 @Component({
     selector: 'smd-datatable-column',
-    template: `
-        <ng-content select="template"></ng-content>
-        <ng-template #internalTemplate *ngIf="!_template" let-model="data">
+    template: `<ng-content select="template" *ngIf="_template"></ng-content>
+        <ng-template #internalTemplate let-model="data">
             {{getFieldValue(model)}}
         </ng-template>
     `
 })
-export class SmdDataTableColumnComponent implements OnInit, OnChanges {
+export class SmdDataTableColumnComponent implements OnInit, OnChanges, AfterViewChecked {
     sortDir?: 'asc' | 'desc' = null;
     id: string = '' + ++columnIds;
 
@@ -205,6 +239,7 @@ export class SmdDataTableColumnComponent implements OnInit, OnChanges {
     @Input() searchable: boolean = false;
     @Input() notNull: boolean = false;
     @Input() search: string;
+    _template: boolean = false;
 
     @ContentChild(TemplateRef) _customTemplate: TemplateRef<Object>;
     @ViewChild('internalTemplate') _internalTemplate: TemplateRef<Object>;
@@ -219,8 +254,7 @@ export class SmdDataTableColumnComponent implements OnInit, OnChanges {
         return !!this._customTemplate;
     }
 
-    constructor(private _viewContainer: ViewContainerRef, private elementRef: ElementRef) {
-    }
+    constructor(public changeDetector: ChangeDetectorRef) {}
 
     ngOnInit(): void {
         if (!this.title) {
@@ -234,7 +268,15 @@ export class SmdDataTableColumnComponent implements OnInit, OnChanges {
         }
     }
 
+    ngAfterViewChecked(): void {
+      this.changeDetector.detectChanges();
+    }
+
     ngOnChanges(changes: any) {
+      // OnChange
+      if (this.hasCustomTemplate) {
+        this._template = true;
+      }
     }
 
     getFieldValue(model: any) {
@@ -247,17 +289,19 @@ export class SmdDataTableColumnComponent implements OnInit, OnChanges {
     selector: 'smd-datatable-action-button',
     template: `
         <button md-button
-                color="primary"
                 *ngIf="_checkButtonIsVisible()"
                 (click)="_onButtonClick($event)">
             <span>{{label}}</span>
+            <md-icon>{{icon}}</md-icon>
         </button>
     `
 })
 export class SmdDatatableActionButtonComponent {
     @Input() label: string;
+    @Input() icon: string;
     @Output() onClick: EventEmitter<void> = new EventEmitter<void>();
 
+    // tslint:disable-next-line:no-forward-ref
     constructor(@Inject(forwardRef(() => SmdDataTableComponent)) private _parent: SmdDataTableComponent) {
     }
 
@@ -269,6 +313,20 @@ export class SmdDatatableActionButtonComponent {
         return this._parent.selectedRows().length === 0;
     }
 }
+
+@Component({
+    selector: 'smd-datatable-title',
+    template: `
+        <span class="datatable-title">
+            {{title}} {{extra}}
+        </span>
+    `
+})
+export class SmdDatatableTitleComponent {
+    @Input() title: string;
+    @Input() extra: string;
+}
+
 
 @Component({
     selector: 'smd-datatable-contextual-button',
@@ -305,6 +363,7 @@ export class SmdContextualDatatableButtonComponent {
     }
 }
 
+
 @Component({
     selector: 'smd-datatable-header',
     template: `
@@ -315,6 +374,7 @@ export class SmdContextualDatatableButtonComponent {
                 {{_selectedRowsLength()}} {{_selectedRowsLength() == 1 ? 'item selected' : 'items selected'}}
             </span>
         </div>
+        <ng-content select="smd-datatable-title"></ng-content>
         <span>
             <div>
                 <md-input-container *ngIf="enableFilter && _selectedRowsLength() == 0">
@@ -324,15 +384,11 @@ export class SmdContextualDatatableButtonComponent {
             </div>
         </span>
     `
-    // ,
-    // host: {
-    //     '[class.is-selected]': '_hasRowsSelected()'
-    // }
 })
 export class SmdDatatableHeaderComponent implements AfterContentInit, OnDestroy {
 
     private filterTimeout: any;
-    public filterValue: string;
+    filterValue: string;
 
     @Input() title: string = null;
     @Input() enableFilter: boolean = false;
@@ -341,18 +397,22 @@ export class SmdDatatableHeaderComponent implements AfterContentInit, OnDestroy 
     @Input() multiCheck: boolean = false;
     @Input() singleCheck: boolean = false;
 
+
     @ContentChildren(SmdDatatableActionButtonComponent) actionButtons: QueryList<SmdDatatableActionButtonComponent>;
     @ContentChildren(SmdContextualDatatableButtonComponent) contextualButtons: QueryList<SmdContextualDatatableButtonComponent>;
 
-    @HostBinding('class.is-selected') get cSelected() { return this._hasRowsSelected() };
+    @HostBinding('class.is-selected') get cSelected() { return this._hasRowsSelected(); }
+    @HostBinding('class.clickable') get cClickable() { return this._parent.enableClick(); }
+
     @HostListener('_hasRowsSelected') _hasRowsSelected(): boolean {
         return this._parent.selectedRows().length > 0;
-    };
+    }
 
+    // tslint:disable-next-line:no-forward-ref
     constructor(@Inject(forwardRef(() => SmdDataTableComponent)) private _parent: SmdDataTableComponent) {
     }
 
-    public shouldRenderCheckbox() {
+    shouldRenderCheckbox() {
         let render;
         if (this.contextualButtons) {
             render =  this.contextualButtons && this.contextualButtons.toArray().filter(
@@ -369,7 +429,7 @@ export class SmdDatatableHeaderComponent implements AfterContentInit, OnDestroy 
         return render;
     }
 
-    public shouldRenderSingleCheckbox() {
+    shouldRenderSingleCheckbox() {
         let render = false;
         if (this.singleCheck) {
             render = true;
@@ -377,11 +437,11 @@ export class SmdDatatableHeaderComponent implements AfterContentInit, OnDestroy 
         return render;
     }
 
-    private _selectedRowsLength(): number {
+    _selectedRowsLength(): number {
         return this._parent.selectedRows().length;
     }
 
-    private _onFilter(event: any): void {
+    _onFilter(event: any): void {
         if (this.filterTimeout) {
             clearTimeout(this.filterTimeout);
         }
@@ -409,29 +469,22 @@ export class SmdDatatableHeaderComponent implements AfterContentInit, OnDestroy 
     selector: 'smd-datatable',
     templateUrl: './datatable.component.html',
     styleUrls: ['./datatable.component.scss'],
-    encapsulation: ViewEncapsulation.None,
+    encapsulation: ViewEncapsulation.None
     // host: {
     //     '[class.smd-responsive]': 'responsive'
     // }
 })
-export class SmdDataTableComponent implements DoCheck, AfterContentInit, OnDestroy {
+export class SmdDataTableComponent implements DoCheck, AfterContentInit, OnDestroy, OnChanges, AfterViewChecked {
 
-    private rows: SmdDataRowModel[] = [];
-    private visibleRows: SmdDataRowModel[] = [];
+    visibleRows: SmdDataRowModel[] = [];
     private differ: any;
     private _columnsSubscription: Subscription;
     private searchValue: string;
     private columnTitleSearch: string;
 
-    @HostBinding('class.smd-responsive') get cRes() { return this.responsive; }
+    rows: SmdDataRowModel[] = [];
 
-    get rowCount(): number {
-        let count = this.rows.length;
-        if (this.pageCount) {
-            count = this.pageCount;
-        }
-        return count;
-    }
+    @HostBinding('class.smd-responsive') get cRes() { return this.responsive; }
 
     @ViewChild(SmdPaginatorComponent) paginatorComponent: SmdPaginatorComponent;
     @ContentChild(SmdDatatableHeaderComponent) header: SmdDatatableHeaderComponent;
@@ -444,6 +497,12 @@ export class SmdDataTableComponent implements DoCheck, AfterContentInit, OnDestr
     @Input() responsive: boolean = false;
     @Input() noCaption: boolean = false;
     @Input() pageCount: number;
+    @Input() clickable: boolean = false;
+    @Input() disableCheckbox: boolean = false;
+
+    @Output() clickFn: EventEmitter<any> = new EventEmitter();
+    @Output() checkFn: EventEmitter<any> = new EventEmitter();
+    @Output() pageFn: EventEmitter<any> = new EventEmitter();
 
     // tslint:disable-next-line:max-line-length
     @Output() onRowSelected: EventEmitter<{model: any, checked: boolean}> = new EventEmitter<{model: any, checked: boolean}>();
@@ -451,8 +510,17 @@ export class SmdDataTableComponent implements DoCheck, AfterContentInit, OnDestr
 
     @Input() responsiveSearch: string;
 
-    constructor(differs: IterableDiffers, private _viewContainer: ViewContainerRef, public changeDetector: ChangeDetectorRef) {
+    constructor(differs: IterableDiffers, public changeDetector: ChangeDetectorRef) {
         this.differ = differs.find([]).create(null);
+    }
+
+    get rowCount(): number {
+        let count = this.rows.length;
+        return count;
+    }
+
+    enableClick(): boolean {
+      return this.clickable;
     }
 
     ngAfterContentInit() {
@@ -482,6 +550,23 @@ export class SmdDataTableComponent implements DoCheck, AfterContentInit, OnDestr
         }
     }
 
+    ngOnDestory(): void {
+      console.log('SmdDataTableComponent Destoryd');
+    }
+
+    ngOnChanges(): void {
+        // let changes = this.differ.diff(this.models);
+        // if (changes) {
+        //     if (this.columns) {
+        //         this._updateRows();
+        //     }
+        // }
+    }
+
+    ngAfterViewChecked(): void {
+      this.changeDetector.detectChanges();
+    }
+
     ngOnDestroy(): void {
         this._columnsSubscription.unsubscribe();
     }
@@ -503,7 +588,7 @@ export class SmdDataTableComponent implements DoCheck, AfterContentInit, OnDestr
         }
 
         let subtexts: string[] = text.trim().split(' ');
-        let searchColumn = this.columnTitleSearch.toLowerCase();
+        // let searchColumn = this.columnTitleSearch.toLowerCase();
         for (let subtext of subtexts) {
             for (let column of columns) {
                 if (this.columnTitleSearch && text) {
@@ -511,6 +596,7 @@ export class SmdDataTableComponent implements DoCheck, AfterContentInit, OnDestr
                         let value: any = column.getFieldValue(row.model);
                         value = String(value);
                         if (value.toLowerCase().indexOf(text.toLowerCase()) !== -1) {
+                            this.paginatorComponent.reset();
                             return true;
                         }
                     }
@@ -543,14 +629,20 @@ export class SmdDataTableComponent implements DoCheck, AfterContentInit, OnDestr
     }
 
     _onMasterCheckChange() {
+        let rowsArray: Array<any> = [];
         this.rows
             .forEach(
                 (row: SmdDataRowModel) => {
                     if (row.checked !== this.checked) {
                         row.checked = this.checked;
                     }
+                    rowsArray.push(row.model);
                 }
             );
+        this.checkFn.emit({
+            model: rowsArray,
+            checked: this.checked
+        });
         this.onAllRowsSelected.emit(this.checked);
     }
 
@@ -573,6 +665,11 @@ export class SmdDataTableComponent implements DoCheck, AfterContentInit, OnDestr
             }
         }
         this.onRowSelected.emit({
+            model: row.model,
+            checked: row.checked
+        });
+
+        this.checkFn.emit({
             model: row.model,
             checked: row.checked
         });
@@ -628,15 +725,16 @@ export class SmdDataTableComponent implements DoCheck, AfterContentInit, OnDestr
         return 0;
     }
 
-    _onPageChange() {
-        this._updateVisibleRows()
+    _onPageChange(event: MouseEvent) {
+        this.pageFn.emit(event);
+        this._updateVisibleRows();
     }
 
     _columnTemplates() {
         return this.columns.toArray().map((c) => c.template);
     }
 
-    public refresh() {
+    refresh() {
         this._updateRows();
     }
 
@@ -649,11 +747,11 @@ export class SmdDataTableComponent implements DoCheck, AfterContentInit, OnDestr
         }
     }
 
-    private _shouldRenderCheckbox() {
+    _shouldRenderCheckbox() {
         return this.rows.length > 0 && this.header.shouldRenderCheckbox();
     }
 
-    private _shouldRenderSingleCheckbox() {
+    _shouldRenderSingleCheckbox() {
         return this.rows.length > 0 && this.header.shouldRenderSingleCheckbox();
     }
 }

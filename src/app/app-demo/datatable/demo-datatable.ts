@@ -145,7 +145,7 @@ export class DemoDatatableComponent implements OnInit {
                         comment: (index <= 5 ? 'comment ' + index : null)
                     };
                 });
-            let newModels = [{
+            let newModels: any = [{
                 id: '',
                 role: (Math.round(Math.random() * 3)),
                 name: 'Name ' + 1,

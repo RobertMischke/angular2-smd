@@ -13,7 +13,8 @@ smd-datatable {
             white-space: nowrap;
             font-size: 13px;
             text-align: center;
-            tr {
+            tr,
+            smd-datatable-row {
                 position: relative;
                 text-overflow: ellipsis;
                 line-height: 24px;
@@ -33,9 +34,9 @@ smd-datatable {
                         text-align: left;
                         padding: 0 12px;
                         &:first-of-type {
-                            width: 30px;
-                            padding-left: 24px;
-                            text-align: left;
+                            // width: 30px;
+                            // padding-left: 24px;
+                            // text-align: left;
                         }
                         .smd-sortable-icon {
                             display: none;
@@ -48,7 +49,7 @@ smd-datatable {
                             width: 30px;
                         }
                         &.smd-searchable {
-                            width: 130px;
+                            width: 20%;
                         }
                         &.smd-datatable-column-sortable {
                             cursor: pointer;
@@ -95,7 +96,8 @@ smd-datatable {
                 }
             }
             tbody {
-                tr {
+                tr,
+                smd-datatable-row {
                     height: 48px;
                     font-size: 12px;
                     position: relative;
@@ -106,6 +108,8 @@ smd-datatable {
                     border-bottom-style: solid;
                     border-top-width: 1px;
                     border-top-style: solid;
+                    display: table-row;
+                    vertical-align: inherit;
                     td {
                         vertical-align: middle;
                         position: relative;
@@ -113,11 +117,14 @@ smd-datatable {
                         text-align: left;
                         padding: 0 10px;
                         &:first-of-type {
-                            padding-left: 24px;
-                            text-align: left;
+                            // padding-left: 24px;
+                            // text-align: left;
                         }
                         &:last-of-type {
-                            padding-right: 24px;
+                            // clear: both;
+                            // float: right;
+                            // line-height: 4;
+                            // padding-right: 24px;
                         }
                         &.smd-numeric-column {
                             text-align: left;
@@ -151,7 +158,7 @@ smd-datatable {
                 flex-wrap: wrap;
                 justify-content: space-between;
                 align-content: flex-end;
-                align-items: flex-start;
+                align-items: center;
                 min-height: 64px;
                 padding: 5px 15px 0 15px;
                 width: calc(100% - 30px);
@@ -222,7 +229,8 @@ smd-datatable {
                     }
                 }
                 tbody {
-                    tr {
+                    tr,
+                    smd-datatable-row {
                         td {
                             &.smd-datatable-body-checkbox {
                                 width: 25px;

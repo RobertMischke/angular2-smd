@@ -2,7 +2,7 @@
 
 Angular 2 datatable based on [Material Design Data Table](https://material.io/guidelines/components/data-tables.html)
 
-### Usage
+## Usage
 
     <smd-datatable
               [models]="models"
@@ -14,11 +14,11 @@ Angular 2 datatable based on [Material Design Data Table](https://material.io/gu
                 [enableFilter]="true"
                 filterLabel="Filter">
             <smd-datatable-action-button (onClick)="addSample($event)" label="Add"></smd-datatable-action-button>
-    
+
             <smd-datatable-contextual-button (onClick)="editSample($event)" icon="edit" [minimunSelected]="1" [maxSelected]="1"></smd-datatable-contextual-button>
             <smd-datatable-contextual-button (onClick)="removeSample($event)" icon="delete" [minimunSelected]="1"></smd-datatable-contextual-button>
         </smd-datatable-header>
-    
+
         <smd-datatable-column searchable="true" title="Name" field="name" sortable="true" titleTooltip="User first name"></smd-datatable-column>
 
         <smd-datatable-column title="Id" field="id" sortable="true" numeric="true" titleTooltip="The identifier Tooltip"></smd-datatable-column>
@@ -37,7 +37,7 @@ Angular 2 datatable based on [Material Design Data Table](https://material.io/gu
         </smd-datatable-column>
         <smd-datatable-column title="Comment" field="comment" titleTooltip="User comment" editable="true" editablePlaceholder="Add a comment"></smd-datatable-column>
     </smd-datatable>
-    
+
 ### Properties
 
 #### smd-datatable
@@ -48,7 +48,6 @@ Angular 2 datatable based on [Material Design Data Table](https://material.io/gu
 | paginated        | boolean      | true                | If this datatable is paginated                      |
 | paginatorRanges  | number[]     | \[10, 25, 50, 100]  | List of avaiable pages sizes for the datatable paginator                      |
 | responsive       | boolean      | false               | If this datatable is responsible                      |
-
 
 #### smd-datatable-header
 
@@ -73,7 +72,6 @@ Angular 2 datatable based on [Material Design Data Table](https://material.io/gu
 | minimunSelected  | number       |                     | The minimun number of rows selected to show this contextual button |
 | maxSelected      | number       |                     | The maximun number of rows selected to show this contextual button |
 
-
 #### smd-datatable-column
 
 | Property              | Type         | Default             | Description                                     |
@@ -96,10 +94,10 @@ Example:
     <ng-template let-model="data">
         {{model.birthDate | date:'dd/MM/yyyy'}}
     </ng-template>
-    
+
 ### TODO List
 
- - Enable inline text edit
- - Inline Menu
- - Enable lazy loading
- - Review css according to the spec
+* Enable inline text edit
+* Inline Menu
+* Enable lazy loading
+* Review css according to the spec

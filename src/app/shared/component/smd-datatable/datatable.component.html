@@ -6,7 +6,7 @@
         <thead>
             <tr>
                 <th *ngIf="_shouldRenderCheckbox() || _shouldRenderSingleCheckbox()">
-                    <md-checkbox [hidden]="_shouldRenderSingleCheckbox()" [(ngModel)]="checked" (change)="_onMasterCheckChange()">
+                    <md-checkbox [hidden]="_shouldRenderSingleCheckbox()" [(ngModel)]="checked" (change)="_onMasterCheckChange()" color="primary" [disabled]="disableCheckbox">
                     </md-checkbox>
                 </th>
                 <th *ngFor="let column of columns" [class.smd-datatable-column-sortable]="column.sortable" [class.smd-numeric-column]="column.numeric" [class.smd-searchable]="column.searchable" (click)="_sortColumn(column)">
@@ -19,7 +19,7 @@
             </tr>
             <tr *ngIf="responsive && ( _shouldRenderCheckbox() || _shouldRenderSingleCheckbox() )" class="smd-datatable-responsive-header">
                 <th [attr.colspan]="columns.length + ( (_shouldRenderCheckbox() || _shouldRenderSingleCheckbox() ) ? 1 : 0)">
-                    <md-checkbox [(ngModel)]="checked" (change)="_onMasterCheckChange()">
+                    <md-checkbox [(ngModel)]="checked" (change)="_onMasterCheckChange()" color="primary" [disabled]="disableCheckbox">
                     </md-checkbox>
                     <!--<md-input-container floatPlaceholder="never" *ngIf="responsiveSearch">
                         <input mdInput [(ngModel)]="search" (ngModelChange)="_onSearchChange($event, responsiveSearch);" type="text">
@@ -29,7 +29,7 @@
             </tr>
         </thead>
         <tbody *ngIf="rows?.length > 0">
-            <tr #dataTableRow smd-datatable-row *ngFor="let row of visibleRows" [class.is-selected]="row.checked" [row]="row" [renderCheckbox]="_shouldRenderCheckbox() || _shouldRenderSingleCheckbox()" [columns]="columns"></tr>
+            <smd-datatable-row *ngFor="let row of visibleRows" [class.clickable]="clickable" [class.is-selected]="row.checked" [row]="row" [renderCheckbox]="_shouldRenderCheckbox() || _shouldRenderSingleCheckbox()" [columns]="columns" #dataTableRow></smd-datatable-row>
         </tbody>
         <tfoot>
             <!-- Using hidden because *ngIf is conflicting with ViewChild(SmdPaginatorComponent) -->

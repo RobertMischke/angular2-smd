@@ -11,10 +11,10 @@
         {{pageStart}}-{{pageEnd}} of {{count}}
     </div>
     <div class="smd-paginator-navigation">
-        <button md-icon-button type="button" (click)="onPreviousClick($event)" [disabled]="pageStart == 1">
+        <button md-icon-button type="button" (click)="onPreviousClick($event)" md-tooltip="Previous" [disabled]="pageStart == 1">
             <i class="material-icons">navigate_before</i>
         </button>
-        <button md-icon-button type="button" (click)="onNextClick($event)" [disabled]="pageEnd == count">
+        <button md-icon-button type="button" (click)="onNextClick($event)" md-tooltip="Next" [disabled]="pageEnd == count">
             <i class="material-icons">navigate_next</i>
         </button>
     </div>
