@@ -3,7 +3,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import {CommonModule} from '@angular/common';
-import {MatDialogModule, MatButtonModule, MatIconModule, MatRadioModule} from '@angular/material';
+import {MatDialogModule, MatButtonModule, MatIconModule, MatRadioModule, MatTooltipModule} from '@angular/material';
 
 import {
     SmdDataTableComponent,
@@ -71,7 +71,7 @@ export class ComponentsModule {
             FormsModule,
             ReactiveFormsModule,
             BrowserModule,
-            MatDialogModule, MatButtonModule, MatIconModule, MatRadioModule,
+            MatDialogModule, MatButtonModule, MatIconModule, MatRadioModule, MatTooltipModule,
             ComponentsModule,
             ...imports
         ]
