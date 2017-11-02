@@ -1,4 +1,4 @@
-import {
+﻿import {
     Component,
     Directive,
     ViewEncapsulation,
@@ -28,7 +28,7 @@ import {
 import { isNullOrUndefined } from 'util';
 import { SmdPaginatorComponent } from '../smd-paginator/paginator.component';
 import { Subscription } from 'rxjs/Subscription';
-import { MdDialogRef, MdDialog, MdDialogConfig } from '@angular/material';
+import { MatDialogRef, MatDialog, MatDialogConfig } from '@angular/material';
 
 let columnIds = 0;
 
@@ -43,27 +43,27 @@ export class SmdDataRowModel {
 @Component({
     selector: 'smd-change-value-dialog',
     template: `
-        <h1 *ngIf="title" md-dialog-title>{{title}}</h1>
-        <md-dialog-content>
-            <md-input-container>
-                <input type="text" mdInput [placeholder]="placeholder" [(ngModel)]="value">
-            </md-input-container>
-        </md-dialog-content>
-        <md-dialog-actions>
-            <button type="button" md-button (click)="_cancel()">Cancel</button>
-            <button type="button" md-button (click)="_save()">Save</button>
-        </md-dialog-actions>
+        <h1 *ngIf="title" mat-dialog-title>{{title}}</h1>
+        <mat-dialog-content>
+            <mat-input-container>
+                <input type="text" matInput [placeholder]="placeholder" [(ngModel)]="value">
+            </mat-input-container>
+        </mat-dialog-content>
+        <mat-dialog-actions>
+            <button type="button" mat-button (click)="_cancel()">Cancel</button>
+            <button type="button" mat-button (click)="_save()">Save</button>
+        </mat-dialog-actions>
     `,
     styles: [`
         * {
             font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
         }
 
-        md-dialog-actions {
+        mat-dialog-actions {
             float: right;
         }
 
-        md-dialog-content {
+        mat-dialog-content {
             min-width: 150px;
             padding: 5px 30px;
         }
@@ -75,7 +75,7 @@ export class SmdDatatableDialogChangeValueComponent {
     placeholder: string;
     value: string;
 
-    constructor(public dialogRef: MdDialogRef<SmdDatatableDialogChangeValueComponent>) {
+    constructor(public dialogRef: MatDialogRef<SmdDatatableDialogChangeValueComponent>) {
     }
 
     _save() {
@@ -144,9 +144,9 @@ export class SmdDataTableClickableDirective {
     template: `
         <td *ngIf="renderCheckbox" class="smd-datatable-body-checkbox">
             <div class="smd-checkbox">
-                <md-checkbox [(ngModel)]="row.checked"
+                <mat-checkbox [(ngModel)]="row.checked"
                   (change)="parentDataTable._onRowCheckChange(row)" color="primary" [disabled]="parentDataTable.disableCheckbox">
-                </md-checkbox>
+                </mat-checkbox>
             </div>
         </td>
         <td smdDataTableClickable *ngFor="let column of columns"
@@ -173,7 +173,7 @@ export class SmdDataTableRowComponent implements OnInit {
 
     // tslint:disable-next-line:no-forward-ref
     constructor(@Inject(forwardRef(() => SmdDataTableComponent)) private _parent: SmdDataTableComponent,
-                private dialog: MdDialog, private viewContainerRef: ViewContainerRef) {
+                private dialog: MatDialog, private viewContainerRef: ViewContainerRef) {
                   this.parentDataTable = this._parent;
     }
 
@@ -186,8 +186,8 @@ export class SmdDataTableRowComponent implements OnInit {
 
     _onClick(column: SmdDataTableColumnComponent, model: any) {
         if (column.editable) {
-            let dialogRef: MdDialogRef<SmdDatatableDialogChangeValueComponent>;
-            let dialogConfig = new MdDialogConfig();
+            let dialogRef: MatDialogRef<SmdDatatableDialogChangeValueComponent>;
+            let dialogConfig = new MatDialogConfig();
             dialogConfig.viewContainerRef = this.viewContainerRef;
 
             dialogRef = this.dialog.open(SmdDatatableDialogChangeValueComponent, dialogConfig);
@@ -288,11 +288,11 @@ export class SmdDataTableColumnComponent implements OnInit, OnChanges, AfterView
 @Component({
     selector: 'smd-datatable-action-button',
     template: `
-        <button md-button
+        <button mat-button
                 *ngIf="_checkButtonIsVisible()"
                 (click)="_onButtonClick($event)">
             <span>{{label}}</span>
-            <md-icon>{{icon}}</md-icon>
+            <mat-icon>{{icon}}</mat-icon>
         </button>
     `
 })
@@ -331,10 +331,10 @@ export class SmdDatatableTitleComponent {
 @Component({
     selector: 'smd-datatable-contextual-button',
     template: `
-        <button md-icon-button
+        <button mat-icon-button
                 *ngIf="_checkButtonIsVisible()"
                 (click)="_onButtonClick($event)">
-            <md-icon>{{icon}}</md-icon>
+            <mat-icon>{{icon}}</mat-icon>
         </button>
     `
 })
@@ -377,9 +377,9 @@ export class SmdContextualDatatableButtonComponent {
         <ng-content select="smd-datatable-title"></ng-content>
         <span>
             <div>
-                <md-input-container *ngIf="enableFilter && _selectedRowsLength() == 0">
-                  <input mdInput [placeholder]="filterLabel" [(ngModel)]="filterValue" (keyup)="_onFilter($event)">
-                </md-input-container>
+                <mat-input-container *ngIf="enableFilter && _selectedRowsLength() == 0">
+                  <input matInput [placeholder]="filterLabel" [(ngModel)]="filterValue" (keyup)="_onFilter($event)">
+                </mat-input-container>
                 <ng-content select="smd-datatable-contextual-button"></ng-content>
             </div>
         </span>

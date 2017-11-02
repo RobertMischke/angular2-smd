@@ -1,4 +1,4 @@
-<div class="smd-table-container">
+﻿<div class="smd-table-container">
     <table class="smd-data-table full-width">
         <caption *ngIf="!noCaption">
             <ng-content select="smd-datatable-header"></ng-content>
@@ -6,25 +6,25 @@
         <thead>
             <tr>
                 <th *ngIf="_shouldRenderCheckbox() || _shouldRenderSingleCheckbox()">
-                    <md-checkbox [hidden]="_shouldRenderSingleCheckbox()" [(ngModel)]="checked" (change)="_onMasterCheckChange()" color="primary" [disabled]="disableCheckbox">
-                    </md-checkbox>
+                    <mat-checkbox [hidden]="_shouldRenderSingleCheckbox()" [(ngModel)]="checked" (change)="_onMasterCheckChange()" color="primary" [disabled]="disableCheckbox">
+                    </mat-checkbox>
                 </th>
                 <th *ngFor="let column of columns" [class.smd-datatable-column-sortable]="column.sortable" [class.smd-numeric-column]="column.numeric" [class.smd-searchable]="column.searchable" (click)="_sortColumn(column)">
                     <span *ngIf="!column.searchable || column.searchable == 'false'" mdTooltip="{{column.titleTooltip}}" [class.smd-sorted-asc]="column.sortDir == 'asc'" [class.smd-sorted-desc]="column.sortDir == 'desc'">{{column.title}}</span>
-                    <md-input-container floatPlaceholder="never" *ngIf="column.searchable == 'true'">
+                    <mat-input-container floatPlaceholder="never" *ngIf="column.searchable == 'true'">
                         <input mdInput [placeholder]="column.title" [(ngModel)]="column.search" (ngModelChange)="_onSearchChange($event, column.title);" type="text">
-                        <md-icon mdSuffix class="material-icons">search</md-icon>
-                    </md-input-container>
+                        <mat-icon mdSuffix class="material-icons">search</mat-icon>
+                    </mat-input-container>
                 </th>
             </tr>
             <tr *ngIf="responsive && ( _shouldRenderCheckbox() || _shouldRenderSingleCheckbox() )" class="smd-datatable-responsive-header">
                 <th [attr.colspan]="columns.length + ( (_shouldRenderCheckbox() || _shouldRenderSingleCheckbox() ) ? 1 : 0)">
-                    <md-checkbox [(ngModel)]="checked" (change)="_onMasterCheckChange()" color="primary" [disabled]="disableCheckbox">
-                    </md-checkbox>
-                    <!--<md-input-container floatPlaceholder="never" *ngIf="responsiveSearch">
+                    <mat-checkbox [(ngModel)]="checked" (change)="_onMasterCheckChange()" color="primary" [disabled]="disableCheckbox">
+                    </mat-checkbox>
+                    <!--<mat-input-container floatPlaceholder="never" *ngIf="responsiveSearch">
                         <input mdInput [(ngModel)]="search" (ngModelChange)="_onSearchChange($event, responsiveSearch);" type="text">
-                        <md-icon mdSuffix class="material-icons">search</md-icon>
-                    </md-input-container>-->
+                        <mat-icon mdSuffix class="material-icons">search</mat-icon>
+                    </mat-input-container>-->
                 </th>
             </tr>
         </thead>
@@ -47,10 +47,10 @@
             <!-- Searchable @TODO Complete in Responsive -->
             <!--<tr *ngIf="rows.length == 0 && responsiveSearch?.length > 0">
                 <th [attr.colspan]="columns.length + (_shouldRenderCheckbox() ? 1 : 0)">
-                    <md-input-container floatPlaceholder="never">
+                    <mat-input-container floatPlaceholder="never">
                         <input mdInput [(ngModel)]="search" (ngModelChange)="_onSearchChange($event, responsiveSearch);" type="text">
-                        <md-icon mdSuffix class="material-icons">search</md-icon>
-                    </md-input-container>
+                        <mat-icon mdSuffix class="material-icons">search</mat-icon>
+                    </mat-input-container>
                 </th>
             </tr>-->
             <tr *ngIf="rows.length == 0">

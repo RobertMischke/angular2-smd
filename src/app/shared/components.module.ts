@@ -1,9 +1,9 @@
-import {NgModule, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+﻿import {NgModule, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import {CommonModule} from '@angular/common';
-import {MaterialModule} from '@angular/material';
+import {MatDialogModule, MatButtonModule, MatIconModule, MatRadioModule} from '@angular/material';
 
 import {
     SmdDataTableComponent,
@@ -51,7 +51,7 @@ let IMPORTS = [
     FormsModule,
     ReactiveFormsModule,
     BrowserModule,
-    MaterialModule
+    MatDialogModule, MatButtonModule, MatIconModule, MatRadioModule
 ];
 
 @NgModule({
@@ -71,7 +71,7 @@ export class ComponentsModule {
             FormsModule,
             ReactiveFormsModule,
             BrowserModule,
-            MaterialModule,
+            MatDialogModule, MatButtonModule, MatIconModule, MatRadioModule,
             ComponentsModule,
             ...imports
         ]

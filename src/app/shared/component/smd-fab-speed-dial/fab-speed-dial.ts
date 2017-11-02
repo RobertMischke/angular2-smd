@@ -1,4 +1,4 @@
-import {
+﻿import {
     Component,
     Input,
     Output,
@@ -15,14 +15,14 @@ import {
     HostBinding,
     HostListener
 } from '@angular/core';
-import {MdButton} from '@angular/material';
+import {MatButton} from '@angular/material';
 
 const Z_INDEX_ITEM: number = 23;
 
 @Component({
     selector: 'smd-fab-trigger',
     template: `
-        <ng-content select="[md-fab], [mat-fab]"></ng-content>
+        <ng-content select="[mat-fab], [mat-fab]"></ng-content>
     `
 })
 export class SmdFabSpeedDialTriggerComponent {
@@ -49,12 +49,12 @@ export class SmdFabSpeedDialTriggerComponent {
 @Component({
     selector: 'smd-fab-actions',
     template: `
-        <ng-content select="[md-mini-fab], [mat-mini-fab]"></ng-content>
+        <ng-content select="[mat-mini-fab], [mat-mini-fab]"></ng-content>
     `
 })
 export class SmdFabSpeedDialActionsComponent implements AfterContentInit {
 
-    @ContentChildren(MdButton) _buttons: QueryList<MdButton>;
+    @ContentChildren(MatButton) _buttons: QueryList<MatButton>;
 
     constructor(@Inject(forwardRef(() => SmdFabSpeedDialComponent)) private _parent: SmdFabSpeedDialComponent, private renderer: Renderer) {
     }
