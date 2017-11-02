@@ -51,7 +51,7 @@ let IMPORTS = [
     FormsModule,
     ReactiveFormsModule,
     BrowserModule,
-    MatDialogModule, MatButtonModule, MatIconModule, MatRadioModule
+    MatDialogModule, MatButtonModule, MatIconModule, MatRadioModule, MatTooltipModule
 ];
 
 @NgModule({
