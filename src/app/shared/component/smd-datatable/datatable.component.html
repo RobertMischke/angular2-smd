@@ -10,7 +10,7 @@
                     </mat-checkbox>
                 </th>
                 <th *ngFor="let column of columns" [class.smd-datatable-column-sortable]="column.sortable" [class.smd-numeric-column]="column.numeric" [class.smd-searchable]="column.searchable" (click)="_sortColumn(column)">
-                    <span *ngIf="!column.searchable || column.searchable == 'false'" mdTooltip="{{column.titleTooltip}}" [class.smd-sorted-asc]="column.sortDir == 'asc'" [class.smd-sorted-desc]="column.sortDir == 'desc'">{{column.title}}</span>
+                    <span *ngIf="!column.searchable || column.searchable == 'false'" matTooltip="{{column.titleTooltip}}" [class.smd-sorted-asc]="column.sortDir == 'asc'" [class.smd-sorted-desc]="column.sortDir == 'desc'">{{column.title}}</span>
                     <mat-input-container floatPlaceholder="never" *ngIf="column.searchable == 'true'">
                         <input mdInput [placeholder]="column.title" [(ngModel)]="column.search" (ngModelChange)="_onSearchChange($event, column.title);" type="text">
                         <mat-icon mdSuffix class="material-icons">search</mat-icon>
