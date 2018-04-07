@@ -27,12 +27,14 @@ import {
 
 let COMPONENTS = [
     SmdDataTableComponent,
+    SmdDatatableTitleComponent,
     SmdDatatableHeaderComponent,
     SmdDatatableActionButtonComponent,
     SmdContextualDatatableButtonComponent,
     SmdDataTableColumnComponent,
     SmdDataTableRowComponent,
     SmdDataTableCellDirective,
+    SmdDataTableClickableDirective,
     SmdDatatableDialogChangeValueComponent,
     SmdPaginatorComponent,
     SmdFabSpeedDialTriggerComponent,
