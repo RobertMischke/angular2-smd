@@ -7,12 +7,14 @@ import {MatDialogModule, MatButtonModule, MatIconModule, MatRadioModule, MatTool
 
 import {
     SmdDataTableComponent,
+    SmdDatatableTitleComponent,
     SmdDatatableHeaderComponent,
     SmdDatatableActionButtonComponent,
     SmdContextualDatatableButtonComponent,
     SmdDataTableColumnComponent,
     SmdDataTableRowComponent,
     SmdDataTableCellDirective,
+    SmdDataTableClickableDirective,
     SmdDatatableDialogChangeValueComponent,
     SmdPaginatorComponent,
     SmdFabSpeedDialTriggerComponent,
