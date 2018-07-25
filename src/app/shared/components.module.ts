@@ -54,7 +54,6 @@ let IMPORTS = [
     HttpModule,
     FormsModule,
     ReactiveFormsModule,
-    BrowserModule,
     MatDialogModule, MatButtonModule, MatIconModule, MatRadioModule, MatTooltipModule, MatRippleModule
 ];
 
@@ -74,7 +73,6 @@ export class ComponentsModule {
             HttpModule,
             FormsModule,
             ReactiveFormsModule,
-            BrowserModule,
             MatDialogModule, MatButtonModule, MatIconModule, MatRadioModule, MatTooltipModule, MatRippleModule,
             ComponentsModule,
             ...imports
