@@ -20,9 +20,6 @@ import {
     SmdFabSpeedDialTriggerComponent,
     SmdFabSpeedDialActionsComponent,
     SmdFabSpeedDialComponent,
-    SmdBottomNavLabelDirective,
-    SmdBottomNavGroupComponent,
-    SmdBottomNavComponent,
     SmdErrorMessageDirective,
     SmdErrorMessagesComponent
 } from './component';
@@ -42,9 +39,6 @@ let COMPONENTS = [
     SmdFabSpeedDialTriggerComponent,
     SmdFabSpeedDialActionsComponent,
     SmdFabSpeedDialComponent,
-    SmdBottomNavLabelDirective,
-    SmdBottomNavGroupComponent,
-    SmdBottomNavComponent,
     SmdErrorMessageDirective,
     SmdErrorMessagesComponent
 ];

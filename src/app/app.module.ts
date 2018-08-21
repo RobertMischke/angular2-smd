@@ -6,14 +6,12 @@ import {ComponentsModule} from './shared/components.module';
 import {DemoDatatableComponent} from './app-demo/datatable/demo-datatable';
 import {DemoHomeComponent} from './app-demo/demo.home';
 import {DemoFabSpeedDialComponent} from './app-demo/fab-speed-dial/demo-fab-speed-dial';
-import {DemoBottomNavComponent} from './app-demo/bottom-nav/demo-bottom-nav';
 import {DemoErrorMessagesComponent} from './app-demo/error-messages/demo-error-messages';
 
 let COMPONENTS = [
     DemoHomeComponent,
     DemoDatatableComponent,
     DemoFabSpeedDialComponent,
-    DemoBottomNavComponent,
     DemoErrorMessagesComponent,
     AppComponent
 ];
