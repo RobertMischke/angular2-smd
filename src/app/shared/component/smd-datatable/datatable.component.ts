@@ -27,7 +27,7 @@
 } from '@angular/core';
 import { isNullOrUndefined } from 'util';
 import { SmdPaginatorComponent } from '../smd-paginator/paginator.component';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { MatDialogRef, MatDialog, MatDialogConfig } from '@angular/material';
 
 let columnIds = 0;
